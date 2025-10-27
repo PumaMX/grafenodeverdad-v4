@@ -32,7 +32,7 @@ export default function Home() {
     <div className="relative w-full h-80 overflow-hidden rounded-2xl shadow-md">
       <div className="carousel">
         <div className="absolute inset-0 animate-slide">
-          <img src="/GrafenoMono.jpeg" alt="Grafeno muestra 1" className="object-cover w-full h-full rounded-2xl" />
+          <img src="/grafeno1.jpg" alt="Grafeno muestra 1" className="object-cover w-full h-full rounded-2xl" />
         </div>
         <div className="absolute inset-0 animate-slide delay-[5s]">
           <img src="/grafeno2.jpg" alt="Grafeno muestra 2" className="object-cover w-full h-full rounded-2xl" />
@@ -112,6 +112,7 @@ Disponemos de:
       </p>
 	</Link>
 
+
     <Link href="/productos/masterbatchs" className="block p-4 bg-white border rounded-2xl shadow hover:shadow-md">
       <h3 className="font-semibold">Masterbatchs y polímeros</h3>
       <p className="text-sm mt-2">
@@ -149,60 +150,31 @@ Disponemos de:
   </div>
 </section>
 
-{/* I+D+I (imagen izquierda) */}
-<section
-  id="iri"
-  className="py-16 bg-white rounded-2xl mx-auto max-w-6xl shadow-md mt-12"
->
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-6">
-    {/* Imagen */}
-    <div className="flex flex-col justify-center order-1 md:order-1">
-      <img
-        src="/Science.372.abf1581_2021.jpeg"
-        alt="Laboratorio de Grafeno"
-        className="rounded-2xl shadow-lg object-cover w-full h-80 md:h-96 transition-transform duration-300 hover:scale-[1.02]"
-      />
-<p className="text-xs text-gray-500 mt-2 italic">
-    Fuente: Adaptado de Armin VahidMohammadi, Johanna Rosen, Yury Gogotsi, Science <strong>372</strong> abf1581 (2021). doi: 10.1126/science.abf1581.
-  </p>   
- </div>
-
-    {/* Texto */}
-    <div className="order-2 md:order-2 text-gray-800">
-      <h2 className="text-3xl font-bold mb-4 text-gray-900">
-        Investigación + Desarrollo + Innovación
-      </h2>
-
-      <p className="text-base mb-4">
-        <strong>Innovación en Grafeno y Materiales van der Waals–2D</strong>
-      </p>
-
-      <p className="text-sm leading-relaxed mb-4">
-        Desarrollamos materiales basados en grafeno y sistemas bidimensionales
-        para impulsar la próxima generación de aplicaciones en electrónica,
-        energía y electromovilidad, ingeniería avanzada y recubrimientos
-        funcionales.
-      </p>
-
-      <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-        <li>
-    Investigación en <strong>MXenes y heteroestructuras 2D</strong> para el desarrollo de materiales con conductividad ajustable, alta estabilidad térmica y comportamiento cuántico controlado.
-  </li>
-  <li>
-    Desarrollo de <strong>sistemas híbridos MNPs/Gr/GrO</strong> (M = Au, Ag, Pd, Pt, Cu, ...) mediante la decoración controlada de grafeno con <strong>nanopartículas metálicas</strong> y/o la <strong>funcionalización química</strong> de su superficie con grupos <em>aminas (-NH₂), tioles (-SH), carboxilos (-COOH), fluoruros (-F)</em> y otras especies orgánicas para aplicaciones avanzadas en catálisis, sensores y electrónica flexible.
-  </li>        
-        <li>
-          Desarrollo de <strong>tintas conductoras</strong> aplicadas en
-          textiles inteligentes y sensores flexibles.
-        </li>
-        <li>
-          Proyectos de <strong>transferencia tecnológica</strong> e
-          innovación colaborativa con industria y academia.
-        </li>
-      </ul>
-	</div>
-  </div>
-</section>
+      {/* I+D+I (imagen izquierda) */}
+      <section id="iri" className="py-16 bg-white rounded-2xl mx-auto max-w-6xl shadow-md mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-6">
+          {/* Imagen */}
+          <div className="flex justify-center order-1 md:order-1">
+            <img 
+              src="/iri_lab.jpg" 
+              alt="Laboratorio de Grafeno" 
+              className="rounded-2xl shadow-md object-cover w-full h-72"
+            />
+          </div>
+          {/* Texto */}
+          <div className="order-2 md:order-2">
+            <h2 className="text-2xl font-bold mb-4">Investigación + Desarrollo + Innovación</h2>
+            <p className="text-sm">
+              <strong>Innovación en Grafeno y Materiales van der Walls-2D</strong>
+		</p>
+    <div className="h-4" /> {/* espacio vertical de 1rem ≈ 16px */}
+		<p className="text-sm">
+ Desarrollamos materiales basados en grafeno y sistemas bidimensionales para impulsar la próxima generación de aplicaciones en electrónica, energía Y electromovilidad, ingeniería avanzada y recubrimientos funcionales. Investigación de MXenes, MNPs/Gr/GrO (M=Au, Cu, Ag, Pt, Pd...), tinta conductora en textiles. 
+              Proyectos y colaboraciones de transferencia tecnológica. {/* hacer una lista con bullets de estos dos renglones */}
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* CONSULTORÍA (imagen derecha) */}
       <section id="consultoria" className="py-16 bg-white rounded-2xl mx-auto max-w-6xl shadow-md mt-12">

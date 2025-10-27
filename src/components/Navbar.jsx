@@ -9,7 +9,7 @@ export default function Navbar() {
         {/* LOGO + NOMBRE */}
         <div className="flex items-center  space-x-1">
           <img 
-            src="/logo_grafeno.png" 
+            src="/Logo_Gr-de-Verdad.png" 
             alt="Logo Grafeno de Verdad" 
             className="h5 w-auto"
        		style={{ width: "2.25in", height: "1.5in" }}
