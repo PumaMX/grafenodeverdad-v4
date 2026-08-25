@@ -13,7 +13,7 @@ const copy = {
     primary: 'Encontrar un material',
     secondary: 'Resolver un reto técnico',
     imageCaption: 'Visualización editorial generada; no representa una instalación o lote específico.',
-    signals: ['Portafolio organizado por familia', 'Evidencia vinculada a grado y lote', 'Ruta de laboratorio a piloto'],
+    signals: [['MX', 'Empresa mexicana'], ['25+', 'Años de experiencia acumulada'], ['04', 'Etapas: definir, seleccionar, validar y escalar']],
     chooseEyebrow: 'Dos puntos de partida',
     chooseTitle: '¿Qué necesita mover hoy?',
     chooseCopy: 'Empiece por la ruta que mejor describe su proyecto. Ambas terminan en criterios de éxito verificables.',
@@ -45,7 +45,7 @@ const copy = {
     primary: 'Find a material',
     secondary: 'Solve a technical challenge',
     imageCaption: 'Generated editorial visualization; it does not represent a specific facility or batch.',
-    signals: ['Portfolio organized by family', 'Evidence linked to grade and batch', 'Lab-to-pilot path'],
+    signals: [['MX', 'Mexican company'], ['25+', 'Years of combined experience'], ['04', 'Stages: define, select, validate and scale']],
     chooseEyebrow: 'Two starting points',
     chooseTitle: 'What do you need to move today?',
     chooseCopy: 'Start with the path that best describes your project. Both end in verifiable success criteria.',
@@ -116,9 +116,9 @@ export default async function HomePage({ params }) {
             <figcaption>{t.imageCaption}</figcaption>
           </figure>
         </div>
-        <div className="container signal-strip">
-          {t.signals.map((signal, index) => <span key={signal}><b>0{index + 1}</b>{signal}</span>)}
-        </div>
+        <ul className="container signal-strip" aria-label={locale === 'es' ? 'Datos clave' : 'Key facts'}>
+          {t.signals.map(([value, label]) => <li key={label}><strong>{value}</strong><span>{label}</span></li>)}
+        </ul>
       </section>
 
       <section className="section section--light">
