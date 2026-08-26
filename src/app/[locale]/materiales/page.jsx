@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ItemCard, PageHero } from '@/components/primitives'
-import { materials } from '@/data/site-content'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getMaterials } from '@/sanity/lib/content'
 
 const copy = {
   es: {
@@ -36,6 +36,7 @@ export default async function MaterialsPage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const t = copy[locale]
+  const materials = await getMaterials()
 
   return (
     <>

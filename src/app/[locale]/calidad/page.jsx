@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PageHero } from '@/components/primitives'
+import { EditorialSections, PageHero } from '@/components/primitives'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getEditorialPage, mergeHeroCopy } from '@/sanity/lib/content'
 
 const copy = {
   es: {
@@ -23,16 +24,18 @@ const copy = {
 export async function generateMetadata({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) return {}
-  const t = copy[locale]
+  const t = mergeHeroCopy(copy[locale], await getEditorialPage('calidad'), locale)
   return localizedMetadata({ locale, title: t.title, description: t.description, path: 'calidad' })
 }
 
 export default async function QualityPage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  const t = copy[locale]
+  const pageContent = await getEditorialPage('calidad')
+  const t = mergeHeroCopy(copy[locale], pageContent, locale)
   return (
-    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} />
+    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} image={pageContent?.heroImage} locale={locale} />
+      <EditorialSections sections={pageContent?.sections} locale={locale} />
       <section className="section"><div className="container"><div className="section-heading"><div><p className="eyebrow">{locale === 'es' ? 'Documentación' : 'Documentation'}</p><h2>{t.docsTitle}</h2></div></div><div className="document-grid">{t.docs.map(([abbr, title, description]) => <article key={abbr}><strong>{abbr}</strong><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>
       <section className="section section--dark"><div className="container"><div className="section-heading"><div><p className="eyebrow">{locale === 'es' ? 'Trazabilidad' : 'Traceability'}</p><h2>{t.chainTitle}</h2></div></div><ol className="process-grid">{t.chain.map(([number, title, description]) => <li key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></li>)}</ol></div></section>
       <section className="section section--compact"><div className="container note-panel"><div><p className="eyebrow">{locale === 'es' ? 'Sin ambigüedad' : 'No ambiguity'}</p><h2>{t.languageTitle}</h2><p>{t.languageCopy}</p></div><Link className="button button--dark" href={pathFor(locale, 'contacto')}>{t.action}</Link></div></section>

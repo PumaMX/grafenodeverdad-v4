@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PageHero } from '@/components/primitives'
+import { EditorialSections, PageHero } from '@/components/primitives'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getEditorialPage, mergeHeroCopy } from '@/sanity/lib/content'
 
 const copy = {
   es: {
@@ -19,16 +20,18 @@ const copy = {
 export async function generateMetadata({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) return {}
-  const t = copy[locale]
+  const t = mergeHeroCopy(copy[locale], await getEditorialPage('recursos'), locale)
   return localizedMetadata({ locale, title: t.title, description: t.description, path: 'recursos' })
 }
 
 export default async function ResourcesPage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  const t = copy[locale]
+  const pageContent = await getEditorialPage('recursos')
+  const t = mergeHeroCopy(copy[locale], pageContent, locale)
   return (
-    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} />
+    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} image={pageContent?.heroImage} locale={locale} />
+      <EditorialSections sections={pageContent?.sections} locale={locale} />
       <section className="section"><div className="container resource-list">{t.guides.map(([number, title, description, points]) => <article key={number}><span>{number}</span><div><h2>{title}</h2><p>{description}</p></div><ul>{points.map((point) => <li key={point}>{point}</li>)}</ul></article>)}</div></section>
       <section className="section section--compact"><div className="container note-panel"><div><p className="eyebrow">{locale === 'es' ? 'En preparación' : 'In preparation'}</p><h2>{locale === 'es' ? 'Documentación ligada al contexto.' : 'Documentation tied to context.'}</h2><p>{t.note}</p></div><Link className="button button--dark" href={pathFor(locale, 'contacto')}>{t.action}</Link></div></section>
     </>

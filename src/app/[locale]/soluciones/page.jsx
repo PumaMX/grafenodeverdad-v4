@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ItemCard, PageHero } from '@/components/primitives'
-import { solutions } from '@/data/site-content'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getSolutions } from '@/sanity/lib/content'
 
 const copy = {
   es: { eyebrow: 'Integración y desempeño', title: 'Soluciones', description: 'Programas de formulación e integración construidos alrededor de su proceso y una métrica de éxito, no alrededor de una palabra de moda.', label: 'Ver solución', note: '¿Su reto no aparece aquí?', noteCopy: 'La ruta a la medida empieza con un brief técnico y una hipótesis que podamos medir.', action: 'Iniciar un desarrollo' },
@@ -20,6 +20,7 @@ export default async function SolutionsPage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const t = copy[locale]
+  const solutions = await getSolutions()
   return (
     <>
       <PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} />

@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PageHero } from '@/components/primitives'
+import { EditorialSections, PageHero } from '@/components/primitives'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getEditorialPage, mergeHeroCopy } from '@/sanity/lib/content'
 
 const copy = {
   es: {
@@ -33,16 +34,18 @@ const copy = {
 export async function generateMetadata({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) return {}
-  const t = copy[locale]
+  const t = mergeHeroCopy(copy[locale], await getEditorialPage('capacidades'), locale)
   return localizedMetadata({ locale, title: t.title, description: t.description, path: 'capacidades' })
 }
 
 export default async function CapabilitiesPage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  const t = copy[locale]
+  const pageContent = await getEditorialPage('capacidades')
+  const t = mergeHeroCopy(copy[locale], pageContent, locale)
   return (
-    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} />
+    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} image={pageContent?.heroImage} locale={locale} />
+      <EditorialSections sections={pageContent?.sections} locale={locale} />
       <section className="section"><div className="container capability-grid">{t.capabilities.map(([number, title, description]) => <article key={number}><span>{number}</span><h2>{title}</h2><p>{description}</p></article>)}</div></section>
       <section className="section section--compact"><div className="container note-panel"><div><p className="eyebrow">{locale === 'es' ? 'Transparencia de alcance' : 'Scope transparency'}</p><h2>{t.boundaryTitle}</h2><p>{t.boundaryCopy}</p></div><Link className="button button--dark" href={pathFor(locale, 'contacto')}>{t.action}</Link></div></section>
     </>

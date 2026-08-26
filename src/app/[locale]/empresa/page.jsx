@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PageHero } from '@/components/primitives'
+import { EditorialSections, PageHero } from '@/components/primitives'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getEditorialPage, mergeHeroCopy } from '@/sanity/lib/content'
 
 const copy = {
   es: {
@@ -23,16 +24,18 @@ const copy = {
 export async function generateMetadata({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) return {}
-  const t = copy[locale]
+  const t = mergeHeroCopy(copy[locale], await getEditorialPage('empresa'), locale)
   return localizedMetadata({ locale, title: t.title, description: t.description, path: 'empresa' })
 }
 
 export default async function CompanyPage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  const t = copy[locale]
+  const pageContent = await getEditorialPage('empresa')
+  const t = mergeHeroCopy(copy[locale], pageContent, locale)
   return (
-    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} />
+    <><PageHero eyebrow={t.eyebrow} title={t.title} copy={t.description} image={pageContent?.heroImage} locale={locale} />
+      <EditorialSections sections={pageContent?.sections} locale={locale} />
       <section className="section"><div className="container editorial-grid"><div><p className="eyebrow">{locale === 'es' ? 'Nuestra tesis' : 'Our thesis'}</p><h2>{t.thesis}</h2></div><div><p className="lead-copy">{t.thesisCopy}</p><p>{t.experience}</p></div></div></section>
       <section className="section section--light"><div className="container principle-grid">{t.principles.map(([title, description], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
       <section className="final-cta final-cta--light"><div className="container final-cta__inner"><div><p className="eyebrow">{locale === 'es' ? 'Método' : 'Method'}</p><h2>{locale === 'es' ? 'Material + proceso + evidencia.' : 'Material + process + evidence.'}</h2></div><Link className="button button--primary" href={pathFor(locale, 'capacidades')}>{t.cta}</Link></div></section>

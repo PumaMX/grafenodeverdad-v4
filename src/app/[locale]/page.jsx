@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ItemCard, SectionHeading } from '@/components/primitives'
-import { materials, solutions } from '@/data/site-content'
 import { CONTACT_EMAIL, isLocale, localizedMetadata, pathFor, SITE_URL } from '@/lib/site'
+import { getHomeContent, getMaterials, getSolutions, mergeHomeCopy, resolveContentHref } from '@/sanity/lib/content'
 import { notFound } from 'next/navigation'
 
 const copy = {
@@ -75,14 +75,15 @@ const copy = {
 export async function generateMetadata({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) return {}
-  const t = copy[locale]
+  const t = mergeHomeCopy(copy[locale], await getHomeContent(), locale)
   return localizedMetadata({ locale, title: t.title, description: t.description })
 }
 
 export default async function HomePage({ params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  const t = copy[locale]
+  const [homeContent, materials, solutions] = await Promise.all([getHomeContent(), getMaterials(), getSolutions()])
+  const t = mergeHomeCopy(copy[locale], homeContent, locale)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -104,13 +105,13 @@ export default async function HomePage({ params }) {
             <h1>{t.title}</h1>
             <p className="hero__copy">{t.description}</p>
             <div className="button-row">
-              <Link className="button button--primary" href={pathFor(locale, 'materiales')}>{t.primary} <span aria-hidden="true">→</span></Link>
-              <Link className="button button--ghost" href={pathFor(locale, 'contacto')}>{t.secondary}</Link>
+              <Link className="button button--primary" href={resolveContentHref(locale, t.primaryHref, pathFor(locale, 'materiales'))}>{t.primary} <span aria-hidden="true">→</span></Link>
+              <Link className="button button--ghost" href={resolveContentHref(locale, t.secondaryHref, pathFor(locale, 'contacto'))}>{t.secondary}</Link>
             </div>
           </div>
           <figure className="hero__visual">
             <div className="hero__image-wrap">
-              <Image src="/hero-materials-v5.webp" alt="" fill priority sizes="(max-width: 760px) 92vw, 46vw" className="hero__image" />
+              <Image src={t.heroImage || '/hero-materials-v5.webp'} alt={t.heroImageAlt || ''} fill priority sizes="(max-width: 760px) 92vw, 46vw" className="hero__image" />
               <div className="material-tag"><span>sp²</span><strong>Carbon</strong><small>2D lattice</small></div>
             </div>
             <figcaption>{t.imageCaption}</figcaption>

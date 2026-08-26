@@ -7,14 +7,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src scripts next.config.js",
+    "lint": "eslint src scripts next.config.js sanity.config.js sanity.cli.js",
+    "check:studio": "sanity schema validate",
     "check:content": "node scripts/validate-content.mjs",
-    "check": "npm run lint && npm run check:content && npm run build"
+    "check": "npm run lint && npm run check:content && npm run check:studio && npm run build"
   },
   "dependencies": {
+    "@sanity/vision": "^6.11.0",
     "next": "16.3.3",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next-sanity": "^13.3.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sanity": "^6.11.0",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
     "eslint": "^9.39.5",

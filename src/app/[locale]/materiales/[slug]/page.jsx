@@ -1,7 +1,9 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { materials } from '@/data/site-content'
+import { materials as materialSeeds } from '@/data/site-content'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
+import { getMaterial } from '@/sanity/lib/content'
 
 const labels = {
   es: {
@@ -19,19 +21,19 @@ const labels = {
 }
 
 export function generateStaticParams() {
-  return materials.map(({ slug }) => ({ slug }))
+  return materialSeeds.map(({ slug }) => ({ slug }))
 }
 
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params
-  const material = materials.find((item) => item.slug === slug)
+  const material = await getMaterial(slug)
   if (!isLocale(locale) || !material) return {}
   return localizedMetadata({ locale, title: material.name[locale], description: material.summary[locale], path: `materiales/${slug}` })
 }
 
 export default async function MaterialDetailPage({ params }) {
   const { locale, slug } = await params
-  const material = materials.find((item) => item.slug === slug)
+  const material = await getMaterial(slug)
   if (!isLocale(locale) || !material) notFound()
   const t = labels[locale]
 
@@ -44,14 +46,15 @@ export default async function MaterialDetailPage({ params }) {
             <div><p className="eyebrow eyebrow--accent">{material.eyebrow[locale]}</p><h1>{material.name[locale]}</h1><p>{material.summary[locale]}</p></div>
             <div className="detail-code"><span>{t.overview}</span><strong>{material.code}</strong><small>{locale === 'es' ? 'Especificación por grado y lote' : 'Grade- and batch-specific'}</small></div>
           </div>
+          {material.leadImage?.url && <figure className="detail-hero__media"><Image src={material.leadImage.url} alt={material.leadImage.alt?.[locale] || ''} fill priority sizes="92vw" />{material.leadImage.caption?.[locale] && <figcaption>{material.leadImage.caption[locale]}</figcaption>}</figure>}
         </div>
       </section>
 
       <section className="section">
         <div className="container detail-columns">
-          <div className="detail-list"><p className="eyebrow">01 · {t.formats}</p><ul>{material.formats[locale].map((value) => <li key={value}>{value}</li>)}</ul></div>
-          <div className="detail-list"><p className="eyebrow">02 · {t.uses}</p><ul>{material.applications[locale].map((value) => <li key={value}>{value}</li>)}</ul></div>
-          <div className="detail-list"><p className="eyebrow">03 · {t.characterization}</p><ul>{material.characterization.map((value) => <li key={value}>{value}</li>)}</ul></div>
+          <div className="detail-list"><p className="eyebrow">01 · {t.formats}</p><ul>{(material.formats?.[locale] || []).map((value) => <li key={value}>{value}</li>)}</ul></div>
+          <div className="detail-list"><p className="eyebrow">02 · {t.uses}</p><ul>{(material.applications?.[locale] || []).map((value) => <li key={value}>{value}</li>)}</ul></div>
+          <div className="detail-list"><p className="eyebrow">03 · {t.characterization}</p><ul>{(material.characterization || []).map((value) => <li key={value}>{value}</li>)}</ul></div>
         </div>
       </section>
 
