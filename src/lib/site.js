@@ -16,7 +16,7 @@ export function pathFor(locale, path = '') {
   return `/${locale}${normalized}`
 }
 
-export function localizedMetadata({ locale, title, description, path = '' }) {
+export function localizedMetadata({ locale, title, description, path = '', image, noIndex = false }) {
   const canonicalPath = pathFor(locale, path)
   const alternatePath = pathFor(alternateLocale(locale), path)
 
@@ -36,6 +36,8 @@ export function localizedMetadata({ locale, title, description, path = '' }) {
       url: canonicalPath,
       locale: locale === 'es' ? 'es_MX' : 'en_US',
       alternateLocale: locale === 'es' ? ['en_US'] : ['es_MX'],
+      ...(image ? { images: [{ url: image }] } : {}),
     },
+    ...(noIndex ? { robots: { index: false, follow: false } } : {}),
   }
 }

@@ -6,6 +6,7 @@ export const sanityClient = createClient({
   dataset,
   apiVersion,
   useCdn: true,
-  stega: false,
+  stega: {
+    studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || '/studio',
+  },
 })
-

@@ -12,6 +12,7 @@ import {
 } from './objects.js'
 import { editorialPage, homePage, material, resource, siteSettings, solution } from './documents.js'
 import { materialTemplates, pageTemplates, solutionTemplates } from '../initial-content.js'
+import { pageBlockTypes } from './page-blocks.js'
 
 export const schemaTypes = [
   localizedString,
@@ -24,6 +25,7 @@ export const schemaTypes = [
   processStep,
   contentSection,
   seoFields,
+  ...pageBlockTypes,
   siteSettings,
   homePage,
   material,

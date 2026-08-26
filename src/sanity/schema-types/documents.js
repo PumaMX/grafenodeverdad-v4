@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { homeInitialValue } from '../initial-content.js'
+import { pageBlockMembers } from './page-blocks.js'
+import { siteSettingsSeed } from '../../data/global-seed.js'
 
 const bilingualRequired = (Rule) => Rule.custom((value) => {
   if (!value?.es || !value?.en) return 'Complete las versiones en español e inglés.'
@@ -10,7 +12,7 @@ export const siteSettings = defineType({
   name: 'siteSettings',
   title: 'Configuración del sitio',
   type: 'document',
-  groups: [{ name: 'identity', title: 'Identidad' }, { name: 'contact', title: 'Contacto' }, { name: 'seo', title: 'SEO' }],
+  groups: [{ name: 'identity', title: 'Identidad' }, { name: 'navigation', title: 'Navegación' }, { name: 'footer', title: 'Pie de página' }, { name: 'contact', title: 'Contacto' }, { name: 'seo', title: 'SEO' }],
   fields: [
     defineField({ name: 'siteName', title: 'Nombre público', type: 'string', group: 'identity', validation: (Rule) => Rule.required() }),
     defineField({ name: 'legalName', title: 'Razón social', type: 'string', group: 'identity' }),
@@ -19,15 +21,16 @@ export const siteSettings = defineType({
     defineField({ name: 'contactEmail', title: 'Correo público', type: 'email', group: 'contact' }),
     defineField({ name: 'phone', title: 'Teléfono público', type: 'string', group: 'contact' }),
     defineField({ name: 'address', title: 'Dirección pública', type: 'localizedText', group: 'contact' }),
+    defineField({ name: 'navigation', title: 'Enlaces del menú', type: 'array', of: [defineArrayMember({ type: 'localizedCta' })], group: 'navigation', description: 'Arrastre para cambiar el orden del menú.' }),
+    defineField({ name: 'contactCta', title: 'Botón principal del menú', type: 'localizedCta', group: 'navigation' }),
+    defineField({ name: 'footerStatement', title: 'Declaración de marca', type: 'localizedText', group: 'footer' }),
+    defineField({ name: 'footerExploreLabel', title: 'Título de enlaces', type: 'localizedString', group: 'footer' }),
+    defineField({ name: 'footerContactLabel', title: 'Título de contacto', type: 'localizedString', group: 'footer' }),
+    defineField({ name: 'footerLegal', title: 'Nota legal', type: 'localizedText', group: 'footer' }),
     defineField({ name: 'canonicalUrl', title: 'Dominio canónico', type: 'url', group: 'seo' }),
     defineField({ name: 'defaultSocialImage', title: 'Imagen predeterminada para compartir', type: 'editorialImage', group: 'seo' }),
   ],
-  initialValue: {
-    siteName: 'Grafeno de Verdad',
-    legalName: 'Grafeno de Verdad, S.A. de C.V.',
-    tagline: { _type: 'localizedString', es: 'Materiales avanzados', en: 'Advanced materials' },
-    contactEmail: 'contacto@grafeno.mx',
-  },
+  initialValue: siteSettingsSeed,
   preview: { prepare: () => ({ title: 'Configuración del sitio' }) },
 })
 
@@ -46,7 +49,7 @@ export const homePage = defineType({
     defineField({ name: 'imageCaption', title: 'Nota de imagen', type: 'localizedText', group: 'media' }),
     defineField({ name: 'gallery', title: 'Galería de portada', type: 'array', of: [defineArrayMember({ type: 'editorialImage' })], group: 'media' }),
     defineField({ name: 'signals', title: 'Datos clave', type: 'array', of: [defineArrayMember({ type: 'keyFact' })], group: 'sections', validation: (Rule) => Rule.max(4) }),
-    defineField({ name: 'sections', title: 'Secciones editoriales', type: 'array', of: [defineArrayMember({ type: 'contentSection' })], group: 'sections' }),
+    defineField({ name: 'sections', title: 'Constructor de página', description: 'Agregue, ordene y oculte bloques. Arrastre para cambiar su posición.', type: 'array', of: pageBlockMembers, group: 'sections' }),
     defineField({ name: 'seo', title: 'SEO y redes', type: 'seoFields', group: 'seo' }),
   ],
   initialValue: homeInitialValue,
@@ -70,6 +73,7 @@ export const material = defineType({
     defineField({ name: 'characterization', title: 'Caracterización', type: 'array', of: [defineArrayMember({ type: 'string' })], group: 'technical' }),
     defineField({ name: 'leadImage', title: 'Imagen principal', type: 'editorialImage', group: 'media' }),
     defineField({ name: 'gallery', title: 'Galería', type: 'array', of: [defineArrayMember({ type: 'editorialImage' })], group: 'media' }),
+    defineField({ name: 'sections', title: 'Bloques de la página', description: 'Contenido adicional ordenable para la ficha del material.', type: 'array', of: pageBlockMembers, group: 'content' }),
     defineField({ name: 'featured', title: 'Destacar en portada', type: 'boolean', group: 'content', initialValue: false }),
     defineField({ name: 'order', title: 'Orden', type: 'number', group: 'content', initialValue: 99 }),
     defineField({ name: 'seo', title: 'SEO y redes', type: 'seoFields', group: 'seo' }),
@@ -92,6 +96,7 @@ export const solution = defineType({
     defineField({ name: 'outcomes', title: 'Resultados buscados', type: 'localizedStringList', group: 'content' }),
     defineField({ name: 'leadImage', title: 'Imagen principal', type: 'editorialImage', group: 'media' }),
     defineField({ name: 'gallery', title: 'Galería', type: 'array', of: [defineArrayMember({ type: 'editorialImage' })], group: 'media' }),
+    defineField({ name: 'sections', title: 'Bloques de la página', description: 'Contenido adicional ordenable para la solución.', type: 'array', of: pageBlockMembers, group: 'content' }),
     defineField({ name: 'featured', title: 'Destacar en portada', type: 'boolean', group: 'content', initialValue: false }),
     defineField({ name: 'order', title: 'Orden', type: 'number', group: 'content', initialValue: 99 }),
     defineField({ name: 'seo', title: 'SEO y redes', type: 'seoFields', group: 'seo' }),
@@ -110,7 +115,7 @@ export const editorialPage = defineType({
     defineField({ name: 'eyebrow', title: 'Antetítulo', type: 'localizedString', group: 'content' }),
     defineField({ name: 'title', title: 'Título', type: 'localizedString', group: 'content', validation: bilingualRequired }),
     defineField({ name: 'description', title: 'Introducción', type: 'localizedText', group: 'content', validation: bilingualRequired }),
-    defineField({ name: 'sections', title: 'Secciones', type: 'array', of: [defineArrayMember({ type: 'contentSection' })], group: 'content' }),
+    defineField({ name: 'sections', title: 'Constructor de página', description: 'Todos los bloques visibles de la página. Arrastre para ordenar; use Mostrar bloque para ocultar.', type: 'array', of: pageBlockMembers, group: 'content' }),
     defineField({ name: 'heroImage', title: 'Imagen principal', type: 'editorialImage', group: 'media' }),
     defineField({ name: 'gallery', title: 'Galería', type: 'array', of: [defineArrayMember({ type: 'editorialImage' })], group: 'media' }),
     defineField({ name: 'seo', title: 'SEO y redes', type: 'seoFields', group: 'seo' }),

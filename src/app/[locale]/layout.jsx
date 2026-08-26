@@ -1,8 +1,12 @@
 import '../globals.css'
 import { notFound } from 'next/navigation'
+import { draftMode } from 'next/headers'
+import { VisualEditing } from 'next-sanity/visual-editing'
 import SiteHeader from '@/components/site-header'
 import SiteFooter from '@/components/site-footer'
 import { isLocale, LOCALES, SITE_NAME, SITE_URL } from '@/lib/site'
+import { SanityLive } from '@/sanity/lib/live'
+import { getSiteSettings } from '@/sanity/lib/content'
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -31,13 +35,16 @@ export function generateStaticParams() {
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
+  const settings = await getSiteSettings()
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
-        <SiteHeader locale={locale} />
+        <SiteHeader locale={locale} settings={settings} />
         <main id="contenido">{children}</main>
-        <SiteFooter locale={locale} />
+        <SiteFooter locale={locale} settings={settings} />
+        <SanityLive />
+        {(await draftMode()).isEnabled && <VisualEditing />}
       </body>
     </html>
   )
