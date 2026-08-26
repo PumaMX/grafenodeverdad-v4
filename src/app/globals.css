@@ -38,11 +38,12 @@ h3 { font-size: clamp(1.3rem, 2vw, 1.75rem); }
 
 .site-header { position: sticky; top: 0; z-index: 100; height: var(--header-height); border-bottom: 1px solid rgba(244, 241, 232, 0.12); background: rgba(11, 16, 15, 0.94); color: var(--paper); backdrop-filter: blur(16px); }
 .site-header__inner { width: min(calc(100% - 48px), 1320px); height: 100%; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.brand { display: inline-flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.brand { min-width: 0; display: inline-flex; align-items: center; gap: 12px; flex: 0 1 auto; }
 .brand__symbol { width: 42px; height: 42px; fill: none; stroke: var(--accent); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
 .brand__symbol circle { fill: var(--paper); stroke: none; }
-.brand__type { display: grid; line-height: 1.05; font-weight: 760; letter-spacing: -0.025em; }
-.brand__type small { margin-top: 5px; color: #95a09b; font-size: 0.63rem; font-weight: 650; letter-spacing: 0.13em; text-transform: uppercase; }
+.brand__type { min-width: 0; display: grid; line-height: 1.05; font-weight: 760; letter-spacing: -0.025em; }
+.brand__name { white-space: nowrap; font-size: clamp(.82rem, 1.15vw, 1rem); }
+.brand__type small { margin-top: 5px; color: #95a09b; font-size: clamp(.5rem, .65vw, .62rem); font-weight: 650; letter-spacing: 0.035em; white-space: nowrap; }
 .site-nav { display: flex; align-items: center; justify-content: flex-end; gap: clamp(14px, 1.5vw, 24px); font-size: 0.82rem; font-weight: 700; }
 .site-nav > a:not(.button) { position: relative; color: #b8c1bd; white-space: nowrap; }
 .site-nav > a:not(.button):hover, .site-nav > a.is-active { color: var(--paper); }
@@ -322,7 +323,9 @@ td:first-child { width: 40%; font-weight: 760; }
   h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); }
   h2 { font-size: clamp(2.15rem, 10vw, 3rem); }
   .brand__symbol { width: 36px; height: 36px; }
-  .brand__type small { display: none; }
+  .brand { gap: 8px; }
+  .brand__name { font-size: clamp(.62rem, 2.75vw, .78rem); }
+  .brand__type small { font-size: clamp(.4rem, 1.75vw, .5rem); letter-spacing: 0; }
   .menu-button > span:first-child { display: none; }
   .site-nav.is-open { grid-template-columns: 1fr; max-height: calc(100vh - var(--header-height)); overflow-y: auto; }
   .site-nav .button { grid-column: auto; }

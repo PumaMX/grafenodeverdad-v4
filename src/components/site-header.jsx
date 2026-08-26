@@ -28,13 +28,14 @@ export default function SiteHeader({ locale, settings }) {
     ? settings.navigation
     : navPaths.map(([key, href]) => ({ _key: key, href, label: { [locale]: t.nav[key] } }))
   const tagline = settings?.tagline?.[locale]
+  const brandName = settings?.legalName || settings?.siteName || 'Grafeno de Verdad, S.A. de C.V.'
 
   return (
     <>
       <a className="skip-link" href="#contenido">{t.skip}</a>
       <header className="site-header">
         <div className="site-header__inner">
-          <BrandMark locale={locale} siteName={settings?.siteName} tagline={tagline} />
+          <BrandMark locale={locale} siteName={brandName} tagline={tagline} />
           <nav id="main-nav" className={`site-nav ${open ? 'is-open' : ''}`} aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'} onClick={(event) => event.target.closest('a') && setOpenPath(null)}>
             {navigation.map((item, index) => {
               const path = stegaClean(item.href || '')

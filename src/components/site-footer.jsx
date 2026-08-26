@@ -6,11 +6,12 @@ import { ui } from '@/data/site-content'
 export default function SiteFooter({ locale, settings }) {
   const t = ui[locale]
   const contactEmail = settings?.contactEmail || CONTACT_EMAIL
+  const brandName = settings?.legalName || settings?.siteName || 'Grafeno de Verdad, S.A. de C.V.'
   return (
     <footer className="site-footer">
       <div className="container site-footer__grid">
         <div>
-          <BrandMark locale={locale} siteName={settings?.siteName} tagline={settings?.tagline?.[locale]} />
+          <BrandMark locale={locale} siteName={brandName} tagline={settings?.tagline?.[locale]} />
           <p className="site-footer__statement">
             {settings?.footerStatement?.[locale] || (locale === 'es'
               ? 'Materiales grafénicos verificables, diseñados para integrarse y escalar. Hechos en México.'

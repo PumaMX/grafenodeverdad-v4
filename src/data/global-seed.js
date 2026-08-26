@@ -5,7 +5,7 @@ const link = (key, es, en, href) => ({ _key: key, _type: 'localizedCta', label: 
 export const siteSettingsSeed = {
   siteName: 'Grafeno de Verdad',
   legalName: 'Grafeno de Verdad, S.A. de C.V.',
-  tagline: short('Materiales avanzados', 'Advanced materials'),
+  tagline: short('Ingeniería e Innovación en Materiales van der Waals', 'Engineering and Innovation in van der Waals Materials'),
   contactEmail: 'contacto@grafeno.mx',
   navigation: [
     link('materials', 'Materiales', 'Materials', 'materiales'),
