@@ -59,6 +59,7 @@ export default function HeroCarousel({ slides = [], locale }) {
               priority={index === 0}
               sizes="(max-width: 820px) 92vw, 46vw"
               className="hero__image"
+              style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
             />
           </div>
         ))}

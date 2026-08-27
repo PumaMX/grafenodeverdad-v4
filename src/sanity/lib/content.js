@@ -192,13 +192,13 @@ export function mergeHomeCopy(base = {}, content, locale) {
   const localSlides = locale === 'es'
       ? [
         { _key: 'materials', src: '/hero-materials-v5.webp', alt: 'Estructura conceptual de un material bidimensional', caption: 'Visualización editorial generada por IA; no representa una instalación o lote específico.' },
-        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', alt: 'Micrografía TEM de hojuelas de material grafénico de Grafeno de Verdad con barra de escala de 500 nanómetros', caption: 'Micrografía TEM de material grafénico de GdV; se observan hojuelas laminares superpuestas. Barra de escala: 500 nm.' },
+        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', objectPosition: 'left center', alt: 'Micrografía TEM de hojuelas de material grafénico de Grafeno de Verdad con barra de escala de 500 nanómetros', caption: 'Micrografía TEM de material grafénico de GdV; se observan hojuelas laminares superpuestas. Barra de escala: 500 nm.' },
         { _key: 'raman-ai', src: '/hero-raman-ai.webp', alt: 'Visualización conceptual de espectroscopía Raman aplicada a grafeno', caption: 'Visualización conceptual generada por IA; no corresponde a una medición Raman ni a un equipo específico de GdV.' },
         { _key: 'cvd-ai', src: '/hero-cvd-ai.webp', alt: 'Visualización conceptual de un proceso de depósito químico de vapor', caption: 'Visualización conceptual generada por IA; no es una fotografía ni un diagrama técnico del reactor CVD de GdV.' },
       ]
       : [
         { _key: 'materials', src: '/hero-materials-v5.webp', alt: 'Conceptual structure of a two-dimensional material', caption: 'AI-generated editorial visualization; it does not represent a specific facility or batch.' },
-        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', alt: 'TEM micrograph of graphene-material flakes from Grafeno de Verdad with a 500-nanometer scale bar', caption: 'TEM micrograph of GdV graphene material showing overlapping lamellar flakes. Scale bar: 500 nm.' },
+        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', objectPosition: 'left center', alt: 'TEM micrograph of graphene-material flakes from Grafeno de Verdad with a 500-nanometer scale bar', caption: 'TEM micrograph of GdV graphene material showing overlapping lamellar flakes. Scale bar: 500 nm.' },
         { _key: 'raman-ai', src: '/hero-raman-ai.webp', alt: 'Conceptual visualization of Raman spectroscopy applied to graphene', caption: 'AI-generated conceptual visualization; it is not a Raman measurement or a specific piece of GdV equipment.' },
         { _key: 'cvd-ai', src: '/hero-cvd-ai.webp', alt: 'Conceptual visualization of a chemical vapor deposition process', caption: 'AI-generated conceptual visualization; it is not a photograph or technical diagram of GdV’s CVD reactor.' },
       ]
