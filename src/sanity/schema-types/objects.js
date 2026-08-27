@@ -86,6 +86,7 @@ export const directorMessage = defineType({
     defineField({ name: 'directorName', title: 'Nombre del Director', type: 'string' }),
     defineField({ name: 'role', title: 'Cargo', type: 'localizedString' }),
     defineField({ name: 'companyName', title: 'Empresa', type: 'string' }),
+    defineField({ name: 'address', title: 'Domicilio en la firma', type: 'string' }),
   ],
   preview: { select: { title: 'title.es', subtitle: 'directorName' } },
 })

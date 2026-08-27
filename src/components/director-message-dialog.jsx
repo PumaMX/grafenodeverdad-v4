@@ -41,6 +41,7 @@ export default function DirectorMessageDialog({ locale, message }) {
             <strong>{message.directorName}</strong>
             <span>{message.role}</span>
             <small>{message.companyName}</small>
+            {message.address && <address>{message.address}</address>}
           </footer>
         </article>
       </dialog>

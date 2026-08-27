@@ -18,6 +18,47 @@ function shouldReplaceSections(sections) {
   return !Array.isArray(sections) || sections.length === 0 || sections.every((section) => section?._type === 'contentSection')
 }
 
+function upgradeDirectorMessage(current, fallback) {
+  const legacyParagraphs = {
+    es: new Map([
+      ['Esta visión se fortalece actualmente con la dirección científica del Dr. José Luis Rodríguez López y con un equipo comprometido con convertir el conocimiento en materiales, procesos y soluciones técnicamente sustentadas.', fallback.paragraphs.es[2]],
+      ['Damos la cara.', fallback.paragraphs.es[4]],
+    ]),
+    en: new Map([
+      ['That vision is now strengthened by the scientific leadership of Dr. José Luis Rodríguez López and a team committed to turning knowledge into technically grounded materials, processes and solutions.', fallback.paragraphs.en[2]],
+      ['We stand behind our work.', fallback.paragraphs.en[4]],
+    ]),
+  }
+  const paragraphs = {}
+  let changed = false
+
+  for (const locale of ['es', 'en']) {
+    const source = current?.paragraphs?.[locale]?.length ? current.paragraphs[locale] : fallback.paragraphs[locale]
+    if (!current?.paragraphs?.[locale]?.length) changed = true
+    paragraphs[locale] = source.map((paragraph) => {
+      const replacement = legacyParagraphs[locale].get(paragraph)
+      if (replacement) changed = true
+      return replacement || paragraph
+    })
+  }
+
+  const role = { ...current?.role }
+  if (!role.es || role.es === 'Director') {
+    role.es = fallback.role.es
+    changed = true
+  }
+  if (!role.en || role.en === 'Director') {
+    role.en = fallback.role.en
+    changed = true
+  }
+
+  if (!current?.address) changed = true
+
+  return changed
+    ? { paragraphs, role, address: current?.address || fallback.address }
+    : null
+}
+
 export function ContentInstallerTool() {
   const client = useClient({ apiVersion: '2026-08-25' })
   const [status, setStatus] = useState('idle')
@@ -30,7 +71,7 @@ export function ContentInstallerTool() {
     setMessage('Revisando el contenido actual…')
 
     try {
-      const existing = await client.fetch('*[_id in $ids]{_id, sections, contactEmail, navigation}', { ids })
+      const existing = await client.fetch('*[_id in $ids]{_id, sections, contactEmail, navigation, directorMessage}', { ids })
       const existingById = new Map(existing.map((document) => [document._id, document]))
       let created = 0
       let completed = 0
@@ -58,6 +99,16 @@ export function ContentInstallerTool() {
               const capabilitiesIndex = navigation.findIndex((item) => item?.href === 'capacidades')
               navigation.splice(capabilitiesIndex + 1, 0, academiaLink)
               next = next.set({ navigation })
+            }
+          }
+          if (_id === 'homePage') {
+            const directorUpgrade = upgradeDirectorMessage(current.directorMessage, fields.directorMessage)
+            if (directorUpgrade) {
+              next = next.set({
+                'directorMessage.paragraphs': directorUpgrade.paragraphs,
+                'directorMessage.role': directorUpgrade.role,
+                'directorMessage.address': directorUpgrade.address,
+              })
             }
           }
           if (sections && shouldReplaceSections(current.sections)) {

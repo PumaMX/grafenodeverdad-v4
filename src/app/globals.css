@@ -114,6 +114,7 @@ h3 { font-size: clamp(1.3rem, 2vw, 1.75rem); }
 .director-dialog__signature strong { color: var(--ink); font-size: 1.05rem; }
 .director-dialog__signature span { color: var(--accent-dark); font-weight: 760; }
 .director-dialog__signature small { margin-top: 2px; color: var(--muted); }
+.director-dialog__signature address { max-width: 520px; margin-top: 6px; color: var(--muted); font-size: .82rem; font-style: normal; }
 @keyframes director-dialog-in { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 .section { padding: clamp(84px, 10vw, 144px) 0; }

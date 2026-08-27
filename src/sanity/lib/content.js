@@ -80,13 +80,30 @@ function mergePage(fallback, content) {
 
 function mergeDirectorMessage(fallback, content) {
   if (!content) return fallback
+  const replacements = {
+    es: new Map([
+      ['Esta visión se fortalece actualmente con la dirección científica del Dr. José Luis Rodríguez López y con un equipo comprometido con convertir el conocimiento en materiales, procesos y soluciones técnicamente sustentadas.', fallback.paragraphs.es[2]],
+      ['Damos la cara.', fallback.paragraphs.es[4]],
+    ]),
+    en: new Map([
+      ['That vision is now strengthened by the scientific leadership of Dr. José Luis Rodríguez López and a team committed to turning knowledge into technically grounded materials, processes and solutions.', fallback.paragraphs.en[2]],
+      ['We stand behind our work.', fallback.paragraphs.en[4]],
+    ]),
+  }
+  const paragraphs = { ...fallback.paragraphs, ...content.paragraphs }
+  for (const locale of ['es', 'en']) {
+    paragraphs[locale] = (paragraphs[locale] || []).map((paragraph) => replacements[locale].get(stegaClean(paragraph).trim()) || paragraph)
+  }
+  const role = { ...fallback.role, ...content.role }
+  if (stegaClean(role.es) === 'Director') role.es = fallback.role.es
+  if (stegaClean(role.en) === 'Director') role.en = fallback.role.en
   return {
     ...fallback,
     ...content,
     label: { ...fallback.label, ...content.label },
     title: { ...fallback.title, ...content.title },
-    paragraphs: { ...fallback.paragraphs, ...content.paragraphs },
-    role: { ...fallback.role, ...content.role },
+    paragraphs,
+    role,
   }
 }
 
@@ -192,13 +209,15 @@ export function mergeHomeCopy(base = {}, content, locale) {
   const localSlides = locale === 'es'
       ? [
         { _key: 'materials', src: '/hero-materials-v5.webp', alt: 'Estructura conceptual de un material bidimensional', caption: 'Visualización editorial generada por IA; no representa una instalación o lote específico.' },
-        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', objectPosition: 'left center', alt: 'Micrografía TEM de hojuelas de material grafénico de Grafeno de Verdad con barra de escala de 500 nanómetros', caption: 'Micrografía TEM de material grafénico de GdV; se observan hojuelas laminares superpuestas. Barra de escala: 500 nm.' },
+        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', objectFit: 'contain', alt: 'Micrografía TEM de hojuelas de material grafénico de Grafeno de Verdad con barra de escala de 500 nanómetros', caption: 'Micrografía TEM de material grafénico de GdV; se observan hojuelas laminares superpuestas. Barra de escala: 500 nm.' },
+        { _key: 'sem-gdv', src: '/hero-sem-gdv.webp', objectFit: 'contain', alt: 'Micrografía SEM de morfología laminar de material grafénico de Grafeno de Verdad con barra de escala de 300 nanómetros', caption: 'Micrografía SEM de material grafénico de GdV; se observa una morfología laminar apilada y superficies escalonadas. Barra de escala: 300 nm.' },
         { _key: 'raman-ai', src: '/hero-raman-ai.webp', alt: 'Visualización conceptual de espectroscopía Raman aplicada a grafeno', caption: 'Visualización conceptual generada por IA; no corresponde a una medición Raman ni a un equipo específico de GdV.' },
         { _key: 'cvd-ai', src: '/hero-cvd-ai.webp', alt: 'Visualización conceptual de un proceso de depósito químico de vapor', caption: 'Visualización conceptual generada por IA; no es una fotografía ni un diagrama técnico del reactor CVD de GdV.' },
       ]
       : [
         { _key: 'materials', src: '/hero-materials-v5.webp', alt: 'Conceptual structure of a two-dimensional material', caption: 'AI-generated editorial visualization; it does not represent a specific facility or batch.' },
-        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', objectPosition: 'left center', alt: 'TEM micrograph of graphene-material flakes from Grafeno de Verdad with a 500-nanometer scale bar', caption: 'TEM micrograph of GdV graphene material showing overlapping lamellar flakes. Scale bar: 500 nm.' },
+        { _key: 'tem-gdv', src: '/hero-tem-gdv.webp', objectFit: 'contain', alt: 'TEM micrograph of graphene-material flakes from Grafeno de Verdad with a 500-nanometer scale bar', caption: 'TEM micrograph of GdV graphene material showing overlapping lamellar flakes. Scale bar: 500 nm.' },
+        { _key: 'sem-gdv', src: '/hero-sem-gdv.webp', objectFit: 'contain', alt: 'SEM micrograph of the lamellar morphology of Grafeno de Verdad graphene material with a 300-nanometer scale bar', caption: 'SEM micrograph of GdV graphene material showing stacked lamellar morphology and stepped surfaces. Scale bar: 300 nm.' },
         { _key: 'raman-ai', src: '/hero-raman-ai.webp', alt: 'Conceptual visualization of Raman spectroscopy applied to graphene', caption: 'AI-generated conceptual visualization; it is not a Raman measurement or a specific piece of GdV equipment.' },
         { _key: 'cvd-ai', src: '/hero-cvd-ai.webp', alt: 'Conceptual visualization of a chemical vapor deposition process', caption: 'AI-generated conceptual visualization; it is not a photograph or technical diagram of GdV’s CVD reactor.' },
       ]
@@ -231,8 +250,9 @@ export function mergeHomeCopy(base = {}, content, locale) {
       title: localized(content.directorMessage?.title, locale, locale === 'es' ? 'La confianza no se pide: se demuestra' : 'Trust is not asked for. It is demonstrated.'),
       paragraphs: content.directorMessage?.paragraphs?.[locale] || [],
       directorName: content.directorMessage?.directorName || 'Luis Caballero Navarro',
-      role: localized(content.directorMessage?.role, locale, 'Director'),
+      role: localized(content.directorMessage?.role, locale, locale === 'es' ? 'Director General' : 'Managing Director'),
       companyName: content.directorMessage?.companyName || 'Grafeno de Verdad, S.A. de C.V.',
+      address: content.directorMessage?.address || 'Añil 345, Granjas México, 08400 Iztacalco, CDMX',
     },
     signals: content.signals?.length
       ? content.signals.map((item) => ({ key: item._key, value: item.value, label: localized(item.label, locale) }))
