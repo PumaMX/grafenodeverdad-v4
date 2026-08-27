@@ -38,7 +38,7 @@ export const homePage = defineType({
   name: 'homePage',
   title: 'Portada',
   type: 'document',
-  groups: [{ name: 'hero', title: 'Primera pantalla', default: true }, { name: 'sections', title: 'Secciones' }, { name: 'media', title: 'Imágenes' }, { name: 'seo', title: 'SEO' }],
+  groups: [{ name: 'hero', title: 'Primera pantalla', default: true }, { name: 'director', title: 'Mensaje del Director' }, { name: 'sections', title: 'Secciones' }, { name: 'media', title: 'Imágenes' }, { name: 'seo', title: 'SEO' }],
   fields: [
     defineField({ name: 'eyebrow', title: 'Antetítulo', type: 'localizedString', group: 'hero', validation: bilingualRequired }),
     defineField({ name: 'title', title: 'Título principal', type: 'localizedString', group: 'hero', validation: bilingualRequired }),
@@ -48,7 +48,8 @@ export const homePage = defineType({
     defineField({ name: 'heroImage', title: 'Imagen principal', type: 'editorialImage', group: 'media' }),
     defineField({ name: 'imageCaption', title: 'Nota de imagen', type: 'localizedText', group: 'media' }),
     defineField({ name: 'gallery', title: 'Galería de portada', type: 'array', of: [defineArrayMember({ type: 'editorialImage' })], group: 'media' }),
-    defineField({ name: 'signals', title: 'Datos clave', type: 'array', of: [defineArrayMember({ type: 'keyFact' })], group: 'sections', validation: (Rule) => Rule.max(4) }),
+    defineField({ name: 'directorMessage', title: 'Contenido del mensaje', type: 'directorMessage', group: 'director', initialValue: homeInitialValue.directorMessage }),
+    defineField({ name: 'signals', title: 'Datos clave', description: 'El dato heredado “MX · Empresa mexicana” se sustituye en la portada por el Mensaje del Director.', type: 'array', of: [defineArrayMember({ type: 'keyFact' })], group: 'sections', validation: (Rule) => Rule.max(4) }),
     defineField({ name: 'sections', title: 'Constructor de página', description: 'Agregue, ordene y oculte bloques. Arrastre para cambiar su posición.', type: 'array', of: pageBlockMembers, group: 'sections' }),
     defineField({ name: 'seo', title: 'SEO y redes', type: 'seoFields', group: 'seo' }),
   ],

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import DirectorMessageDialog from '@/components/director-message-dialog'
 import PageBuilder from '@/components/page-builder'
 import { CONTACT_EMAIL, isLocale, localizedMetadata, pathFor, SITE_URL } from '@/lib/site'
 import { getHomeContent, localizedSeo, mergeHomeCopy, resolveContentHref } from '@/sanity/lib/content'
@@ -17,6 +18,7 @@ export default async function HomePage({ params }) {
   if (!isLocale(locale)) notFound()
   const homeContent = await getHomeContent()
   const t = mergeHomeCopy({}, homeContent, locale)
+  const signals = (t.signals || []).filter((signal) => signal.key !== 'mexico' && signal.value !== 'MX')
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -51,7 +53,8 @@ export default async function HomePage({ params }) {
           </figure>
         </div>
         <ul className="container signal-strip" aria-label={locale === 'es' ? 'Datos clave' : 'Key facts'}>
-          {(t.signals || []).map(([value, label]) => <li key={`${value}-${label}`}><strong>{value}</strong><span>{label}</span></li>)}
+          <li className="signal-strip__director"><DirectorMessageDialog locale={locale} message={t.directorMessage} /></li>
+          {signals.map(({ key, value, label }) => <li key={key || `${value}-${label}`}><strong>{value}</strong><span>{label}</span></li>)}
         </ul>
       </section>
       <PageBuilder sections={homeContent?.sections} locale={locale} />

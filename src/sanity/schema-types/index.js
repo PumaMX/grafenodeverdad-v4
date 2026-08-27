@@ -1,5 +1,6 @@
 import {
   contentSection,
+  directorMessage,
   editorialImage,
   keyFact,
   localizedCta,
@@ -20,6 +21,7 @@ export const schemaTypes = [
   localizedStringList,
   localizedRichText,
   localizedCta,
+  directorMessage,
   editorialImage,
   keyFact,
   processStep,

@@ -16,7 +16,7 @@ const sectionsProjection = `sections[]{
 }`
 
 const homeQuery = `*[_type == "homePage" && _id == "homePage"][0]{
-  _id, eyebrow, title, description, primaryCta, secondaryCta, imageCaption, signals,
+  _id, eyebrow, title, description, primaryCta, secondaryCta, imageCaption, directorMessage, signals,
   heroImage${imageProjection},
   seo{title, description, noIndex, image${imageProjection}},
   ${sectionsProjection}
@@ -76,6 +76,18 @@ function mergePage(fallback, content) {
   }
 }
 
+function mergeDirectorMessage(fallback, content) {
+  if (!content) return fallback
+  return {
+    ...fallback,
+    ...content,
+    label: { ...fallback.label, ...content.label },
+    title: { ...fallback.title, ...content.title },
+    paragraphs: { ...fallback.paragraphs, ...content.paragraphs },
+    role: { ...fallback.role, ...content.role },
+  }
+}
+
 function mergeCatalog(fallback, content, detailSections) {
   const fallbackWithSections = fallback.map((item) => ({
     ...item,
@@ -103,7 +115,11 @@ function mergeCatalog(fallback, content, detailSections) {
 }
 
 export async function getHomeContent(options = {}) {
-  return mergePage(homeSeed, await safeFetch(homeQuery, {}, options))
+  const content = await safeFetch(homeQuery, {}, options)
+  return {
+    ...mergePage(homeSeed, content),
+    directorMessage: mergeDirectorMessage(homeSeed.directorMessage, content?.directorMessage),
+  }
 }
 
 export async function getMaterials(options = {}) {
@@ -174,8 +190,16 @@ export function mergeHomeCopy(base = {}, content, locale) {
     imageCaption: localized(content.imageCaption, locale, base.imageCaption),
     heroImage: content.heroImage?.url,
     heroImageAlt: localized(content.heroImage?.alt, locale, ''),
+    directorMessage: {
+      label: localized(content.directorMessage?.label, locale, locale === 'es' ? 'Mensaje del Director' : "Director's Message"),
+      title: localized(content.directorMessage?.title, locale, locale === 'es' ? 'La confianza no se pide: se demuestra' : 'Trust is not asked for. It is demonstrated.'),
+      paragraphs: content.directorMessage?.paragraphs?.[locale] || [],
+      directorName: content.directorMessage?.directorName || 'Luis Caballero Navarro',
+      role: localized(content.directorMessage?.role, locale, 'Director'),
+      companyName: content.directorMessage?.companyName || 'Grafeno de Verdad, S.A. de C.V.',
+    },
     signals: content.signals?.length
-      ? content.signals.map((item) => [item.value, localized(item.label, locale)])
+      ? content.signals.map((item) => ({ key: item._key, value: item.value, label: localized(item.label, locale) }))
       : base.signals,
   }
 }

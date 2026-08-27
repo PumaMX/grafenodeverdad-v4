@@ -75,6 +75,21 @@ export const keyFact = defineType({
   preview: { select: { title: 'value', subtitle: 'label.es' } },
 })
 
+export const directorMessage = defineType({
+  name: 'directorMessage',
+  title: 'Mensaje del Director',
+  type: 'object',
+  fields: [
+    defineField({ name: 'label', title: 'Texto del botón', type: 'localizedString' }),
+    defineField({ name: 'title', title: 'Título del mensaje', type: 'localizedString' }),
+    defineField({ name: 'paragraphs', title: 'Párrafos', description: 'Cada elemento se muestra como un párrafo independiente.', type: 'localizedStringList' }),
+    defineField({ name: 'directorName', title: 'Nombre del Director', type: 'string' }),
+    defineField({ name: 'role', title: 'Cargo', type: 'localizedString' }),
+    defineField({ name: 'companyName', title: 'Empresa', type: 'string' }),
+  ],
+  preview: { select: { title: 'title.es', subtitle: 'directorName' } },
+})
+
 export const processStep = defineType({
   name: 'processStep',
   title: 'Paso',
@@ -116,4 +131,3 @@ export const seoFields = defineType({
     defineField({ name: 'noIndex', title: 'Ocultar de buscadores', type: 'boolean', initialValue: false }),
   ],
 })
-
