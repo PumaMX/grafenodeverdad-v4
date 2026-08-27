@@ -126,11 +126,11 @@ export const solutions = [
 
 export const ui = {
   es: {
-    localeName: 'ES', languageLabel: 'English', nav: { materials: 'Materiales', solutions: 'Soluciones', capabilities: 'Capacidades', quality: 'Calidad', company: 'Empresa', resources: 'Recursos', contact: 'Iniciar proyecto' },
+    localeName: 'ES', languageLabel: 'English', nav: { materials: 'Materiales', solutions: 'Soluciones', capabilities: 'Capacidades', academia: 'Academia–Industria', quality: 'Calidad', company: 'Empresa', resources: 'Recursos', contact: 'Iniciar proyecto' },
     menu: 'Menú', close: 'Cerrar', skip: 'Saltar al contenido', home: 'Inicio', explore: 'Explorar', contact: 'Iniciar proyecto', viewAll: 'Ver todos', back: 'Volver',
   },
   en: {
-    localeName: 'EN', languageLabel: 'Español', nav: { materials: 'Materials', solutions: 'Solutions', capabilities: 'Capabilities', quality: 'Quality', company: 'Company', resources: 'Resources', contact: 'Start a project' },
+    localeName: 'EN', languageLabel: 'Español', nav: { materials: 'Materials', solutions: 'Solutions', capabilities: 'Capabilities', academia: 'Academia–Industry', quality: 'Quality', company: 'Company', resources: 'Resources', contact: 'Start a project' },
     menu: 'Menu', close: 'Close', skip: 'Skip to content', home: 'Home', explore: 'Explore', contact: 'Start a project', viewAll: 'View all', back: 'Back',
   },
 }

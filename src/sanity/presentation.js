@@ -3,6 +3,7 @@ import { defineLocations } from 'sanity/presentation'
 const pageTitles = {
   empresa: 'Empresa',
   capacidades: 'Capacidades',
+  'academia-industria': 'Academia–Industria',
   calidad: 'Calidad',
   recursos: 'Recursos',
   contacto: 'Contacto',

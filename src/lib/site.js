@@ -1,7 +1,19 @@
 export const SITE_NAME = 'Grafeno de Verdad'
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://grafenodeverdad-v4.vercel.app'
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contacto@grafeno.mx'
+export const CONTACT_EMAIL = 'grafenodeverdad@gmail.com'
 export const LOCALES = ['es', 'en']
+
+const LEGACY_CONTACT_EMAILS = new Set([
+  'contacto@grafeno.mx',
+  'contacto@grafenodeverdad.mx',
+  'contacto@grefenodeverdad.mx',
+])
+
+export function normalizeContactEmail(value) {
+  const normalized = String(value || '').trim().toLowerCase()
+  if (!normalized || LEGACY_CONTACT_EMAILS.has(normalized)) return CONTACT_EMAIL
+  return normalized
+}
 
 export function isLocale(value) {
   return LOCALES.includes(value)

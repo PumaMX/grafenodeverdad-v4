@@ -128,7 +128,7 @@ export const homeSeed = {
       eyebrow: short('Su siguiente experimento', 'Your next experiment'), title: short('Cuéntenos qué quiere mejorar.', 'Tell us what you want to improve.'),
       body: long('Con la aplicación, la matriz, el proceso y una métrica objetivo podemos proponer el siguiente paso con más precisión.', 'With the application, matrix, process and a target metric, we can propose a more precise next step.'),
       primary: cta('final-primary', 'Preparar un brief técnico', 'Prepare a technical brief', 'contacto'),
-      secondary: cta('final-secondary', 'Escribir directamente', 'Email us directly', 'mailto:contacto@grafeno.mx'),
+      secondary: cta('final-secondary', 'Escribir directamente', 'Email us directly', 'mailto:grafenodeverdad@gmail.com'),
     },
   ],
 }
@@ -179,6 +179,131 @@ export const pageSeeds = {
         eyebrow: short('Transparencia de alcance', 'Scope transparency'), title: short('Capacidad no significa disponibilidad automática.', 'Capability does not mean automatic availability.'),
         body: long('Equipos, técnicas, volúmenes y tiempos se confirman en cada propuesta, ya sea con infraestructura propia o una red de colaboración. La documentación identifica el método y el responsable de cada medición.', 'Equipment, techniques, volumes and lead times are confirmed in each proposal, whether through in-house infrastructure or a collaboration network. Documentation identifies the method and the party responsible for each measurement.'),
         primary: cta('scope', 'Definir alcance', 'Define scope', 'contacto'),
+      },
+    ],
+  ),
+  'academia-industria': page(
+    'academia-industria',
+    ['Colaboración Academia–Industria', 'Academia–Industry Collaboration'],
+    ['La ciencia avanza cuando una buena pregunta encuentra capacidades reales.', 'Science advances when a good question meets real capabilities.'],
+    [
+      'En Grafeno de Verdad conocemos el rigor, los tiempos y las restricciones de la investigación académica. Abrimos nuestras capacidades en materiales grafénicos y sistemas van der Waals para construir colaboraciones serias, cercanas y útiles.',
+      'At Grafeno de Verdad, we understand the rigor, timelines and constraints of academic research. We open our capabilities in graphene materials and van der Waals systems to build serious, approachable and useful collaborations.',
+    ],
+    [
+      {
+        _key: 'open-doors', _type: 'splitTextBlock', internalTitle: 'Puertas abiertas a la academia', enabled: true, surface: 'paper', layout: 'text',
+        eyebrow: short('Puertas abiertas', 'Open doors'),
+        title: short('La academia no es un mercado secundario: es parte del ecosistema de innovación.', 'Academia is not a secondary market: it is part of the innovation ecosystem.'),
+        lead: long(
+          'Sabemos que detrás de cada tesis hay una pregunta difícil, recursos limitados y una persona que necesita resultados defendibles. Queremos escuchar esa pregunta antes de ofrecer un material.',
+          'We know that behind every thesis there is a difficult question, limited resources and a person who needs defensible results. We want to hear that question before offering a material.',
+        ),
+        body: long(
+          'Buscamos relaciones en las que universidad y empresa aporten lo que mejor saben hacer: profundidad científica, infraestructura, materiales, contexto de aplicación y una ruta clara para convertir hallazgos en conocimiento o tecnología útil. Una colaboración puede comenzar con una conversación, una muestra o un experimento bien delimitado.',
+          'We seek relationships in which universities and industry contribute what each does best: scientific depth, infrastructure, materials, application context and a clear route for turning findings into useful knowledge or technology. A collaboration may begin with a conversation, a sample or a well-bounded experiment.',
+        ),
+        points: list(
+          ['Escuchamos antes de proponer', 'Definimos alcances y responsabilidades', 'Valoramos resultados positivos y negativos', 'No confundimos colaboración con publicidad'],
+          ['We listen before proposing', 'We define scope and responsibilities', 'We value positive and negative results', 'We do not confuse collaboration with publicity'],
+        ),
+      },
+      {
+        _key: 'electronic-structure', _type: 'splitTextBlock', internalTitle: 'Estructura electrónica antes de sintetizar', enabled: true, surface: 'dark', layout: 'text',
+        eyebrow: short('Diseño con fundamento', 'Evidence-led design'),
+        title: short('Antes de sintetizar, formulamos una hipótesis computacional.', 'Before synthesis, we formulate a computational hypothesis.'),
+        lead: long(
+          'Comprender la estructura electrónica de materiales y heteroestructuras van der Waals 2D y 2.5D permite reducir el espacio de prueba y orientar el experimento hacia una función concreta.',
+          'Understanding the electronic structure of 2D and 2.5D van der Waals materials and heterostructures helps narrow the design space and orient the experiment toward a specific function.',
+        ),
+        body: long(
+          'Analizamos, según la pregunta, estructura de bandas, densidad de estados, alineamiento de bandas, redistribución de carga, acoplamiento entre capas y el efecto de defectos, dopaje, deformación o adsorción. El cálculo no sustituye la síntesis ni la caracterización: identifica candidatos, anticipa tendencias y define observables que después deben medirse. Así llegamos al laboratorio con una hipótesis explícita, no con una búsqueda a ciegas.',
+          'Depending on the question, we analyze band structure, density of states, band alignment, charge redistribution, interlayer coupling and the effects of defects, doping, strain or adsorption. Computation does not replace synthesis or characterization: it identifies candidates, anticipates trends and defines observables that must then be measured. This lets us enter the laboratory with an explicit hypothesis rather than a blind search.',
+        ),
+        points: list(
+          ['Seleccionar composiciones y apilamientos', 'Relacionar estructura electrónica con función', 'Definir señales experimentales relevantes', 'Decidir qué vale la pena sintetizar y validar'],
+          ['Select compositions and stacking arrangements', 'Connect electronic structure with function', 'Define relevant experimental signals', 'Decide what is worth synthesizing and validating'],
+        ),
+      },
+      {
+        _key: 'collaboration-modes', _type: 'cardsBlock', internalTitle: 'Formas de colaboración', enabled: true, surface: 'light', presentation: 'cards', columns: 3,
+        eyebrow: short('Formas de colaborar', 'Ways to collaborate'),
+        title: short('De una estancia breve a un proyecto compartido.', 'From a short research stay to a shared project.'),
+        body: long('Cada modalidad comienza con objetivos, responsables, entregables, tiempos y reglas de uso de información claramente definidos.', 'Each modality begins with clearly defined objectives, owners, deliverables, timelines and information-use rules.'),
+        items: [
+          item('theses', { number: '01', title: ['Tesis co-desarrolladas', 'Co-developed theses'], body: ['Acompañamiento técnico para licenciatura, maestría o doctorado, con una pregunta viable y aportaciones explícitas de cada parte.', 'Technical support for undergraduate, master’s or doctoral work, with a viable question and explicit contributions from each party.'] }),
+          item('stays', { number: '02', title: ['Estancias de investigación', 'Research stays'], body: ['Periodos definidos para aprender, ejecutar o validar una etapa concreta del proyecto bajo supervisión.', 'Defined periods to learn, execute or validate a specific project stage under supervision.'] }),
+          item('internships', { number: '03', title: ['Prácticas profesionales', 'Professional internships'], body: ['Experiencias con un problema real, objetivos formativos y resultados útiles tanto para el estudiante como para GdV.', 'Experiences built around a real problem, learning objectives and useful results for both the student and GdV.'] }),
+          item('joint-projects', { number: '04', title: ['Proyectos conjuntos', 'Joint projects'], body: ['Propuestas, fondos, publicaciones o pilotos que combinen capacidades complementarias de una institución y la empresa.', 'Proposals, funding, publications or pilots combining complementary capabilities from an institution and the company.'] }),
+          item('characterization', { number: '05', title: ['Síntesis y caracterización', 'Synthesis and characterization'], body: ['Materiales, preparación de muestras y técnicas seleccionadas para responder una pregunta, no para acumular gráficas.', 'Materials, sample preparation and techniques selected to answer a question—not to accumulate plots.'] }),
+          item('transfer', { number: '06', title: ['Transferencia y escalamiento', 'Transfer and scale-up'], body: ['Puentes para evaluar si un hallazgo académico puede convertirse en un proceso, prototipo o nicho industrial.', 'Pathways to assess whether an academic finding can become a process, prototype or industrial niche.'] }),
+        ],
+      },
+      {
+        _key: 'collaboration-path', _type: 'processBlock', internalTitle: 'Ruta de colaboración', enabled: true, surface: 'dark',
+        eyebrow: short('Una ruta clara', 'A clear path'),
+        title: short('De la pregunta al siguiente experimento.', 'From the question to the next experiment.'),
+        body: long('No todas las conversaciones deben convertirse en convenio. Primero comprobamos que exista una pregunta abordable y una contribución real de ambas partes.', 'Not every conversation needs to become an agreement. First, we confirm that there is an addressable question and a real contribution from both sides.'),
+        items: [
+          item('question', { number: '01', title: ['Plantear', 'Frame'], body: ['Pregunta, hipótesis, aplicación, estado del proyecto y resultado esperado.', 'Question, hypothesis, application, project status and expected outcome.'] }),
+          item('fit', { number: '02', title: ['Alinear', 'Align'], body: ['Capacidades, material, método, responsables, calendario y criterios de éxito.', 'Capabilities, material, method, owners, timeline and success criteria.'] }),
+          item('execute', { number: '03', title: ['Ejecutar', 'Execute'], body: ['Cálculo, síntesis, caracterización o integración con registro de variables críticas.', 'Computation, synthesis, characterization or integration with critical variables recorded.'] }),
+          item('learn', { number: '04', title: ['Decidir', 'Decide'], body: ['Interpretar juntos, documentar lo aprendido y definir si conviene iterar, publicar, escalar o detener.', 'Interpret together, document what was learned and decide whether to iterate, publish, scale or stop.'] }),
+        ],
+      },
+      {
+        _key: 'academic-samples', _type: 'splitTextBlock', internalTitle: 'Programa de muestras académicas', enabled: true, surface: 'paper', layout: 'text',
+        eyebrow: short('Solicita tu muestra', 'Request your sample'),
+        title: short('Una muestra puede abrir una línea de investigación.', 'A sample can open a line of research.'),
+        lead: long(
+          'Estudiantes de licenciatura, maestría o doctorado pueden solicitar, sin costo de material y sin obligación de compra, una cantidad de investigación de alguno de nuestros materiales grafénicos.',
+          'Undergraduate, master’s and doctoral students may request a research quantity of one of our graphene materials, with no material charge and no purchase obligation.',
+        ),
+        body: long(
+          'Las solicitudes se evalúan por pertinencia técnica, disponibilidad, seguridad, cantidad requerida y cupo periódico. Cuando el proyecto sea elegible, GdV propondrá el tipo, formato y cantidad de material más adecuados. El único compromiso editorial es reconocer a Grafeno de Verdad, S.A. de C.V. como proveedor de la muestra en cualquier tesis, artículo, ponencia, cartel u otro producto que efectivamente utilice el material. No exigimos resultados positivos, autoría ni cesión de propiedad intelectual por entregar una muestra.',
+          'Requests are evaluated for technical fit, availability, safety, quantity and periodic program capacity. When a project is eligible, GdV will propose the most suitable material type, format and amount. The only editorial commitment is to acknowledge Grafeno de Verdad, S.A. de C.V. as the sample provider in any thesis, article, talk, poster or other output that actually uses the material. We do not require positive results, authorship or assignment of intellectual property in exchange for a sample.',
+        ),
+        points: list(
+          ['Cantidad pequeña para investigación académica', 'Sujeto a revisión técnica, disponibilidad y cupo', 'Sin obligación de compra', 'Reconocimiento como proveedor cuando la muestra genere un producto académico'],
+          ['Small quantity for academic research', 'Subject to technical review, availability and program capacity', 'No purchase obligation', 'Provider acknowledgment when the sample contributes to an academic output'],
+        ),
+        action: cta('request-sample', 'Presentar una solicitud', 'Submit a request', 'mailto:grafenodeverdad@gmail.com?subject=Solicitud%20de%20muestra%20acad%C3%A9mica'),
+      },
+      {
+        _key: 'sample-request', _type: 'cardsBlock', internalTitle: 'Qué incluir en la solicitud', enabled: true, surface: 'light', presentation: 'cards', columns: 3,
+        eyebrow: short('Solicitud breve', 'A short request'),
+        title: short('Lo necesario para evaluar con seriedad.', 'What we need for a serious review.'),
+        body: long('No pedimos una propuesta extensa. Un correo claro permite saber si la muestra puede ayudar y evita entregar un material inadecuado.', 'We do not ask for a lengthy proposal. A clear email lets us determine whether a sample can help and prevents us from supplying an unsuitable material.'),
+        items: [
+          item('identity', { number: '01', title: ['Quién solicita', 'Who is requesting'], body: ['Nombre, institución, programa académico, nivel de estudios y datos del asesor o responsable del proyecto.', 'Name, institution, academic program, degree level and the project adviser’s or lead researcher’s contact information.'] }),
+          item('project', { number: '02', title: ['Qué investiga', 'What you are researching'], body: ['Título o tema de tesis, objetivo, hipótesis, aplicación prevista y etapa actual del trabajo.', 'Thesis title or topic, objective, hypothesis, intended application and current stage of the work.'] }),
+          item('material', { number: '03', title: ['Qué necesita', 'What you need'], body: ['Material de interés, cantidad estimada, matriz o sustrato, método de incorporación y técnicas de evaluación disponibles.', 'Material of interest, estimated amount, matrix or substrate, incorporation method and available evaluation techniques.'] }),
+          item('output', { number: '04', title: ['Qué espera producir', 'What you expect to produce'], body: ['Tesis, artículo, cartel, ponencia, prototipo u otro resultado, junto con un calendario aproximado.', 'Thesis, article, poster, talk, prototype or another result, together with an approximate timeline.'] }),
+          item('handling', { number: '05', title: ['Manejo responsable', 'Responsible handling'], body: ['Confirmación de que la institución cuenta con supervisión, condiciones de seguridad y gestión de residuos apropiadas.', 'Confirmation that the institution provides appropriate supervision, safety conditions and waste management.'] }),
+          item('follow-up', { number: '06', title: ['Cierre del ciclo', 'Close the loop'], body: ['Agradecemos conocer el resultado —incluidos resultados negativos— porque mejora la selección futura de materiales y preguntas.', 'We appreciate learning the outcome—including negative results—because it improves future material selection and research questions.'] }),
+        ],
+      },
+      {
+        _key: 'collaboration-terms', _type: 'splitTextBlock', internalTitle: 'Integridad, publicación y propiedad intelectual', enabled: true, surface: 'paper', layout: 'text',
+        eyebrow: short('Reglas claras desde el inicio', 'Clear rules from the start'),
+        title: short('Colaborar no debe crear ambigüedad.', 'Collaboration should not create ambiguity.'),
+        lead: long('Una muestra académica, una estancia y un co-desarrollo no son lo mismo. Cada relación necesita el nivel de acuerdo que corresponde a su alcance.', 'An academic sample, a research stay and a co-development project are not the same. Each relationship needs an agreement appropriate to its scope.'),
+        body: long(
+          'Una muestra estándar no transfiere derechos sobre marcas, procesos ni información confidencial. Si el trabajo incluye formulaciones, resultados reservados, invenciones, acceso a instalaciones o desarrollo conjunto, acordaremos antes de iniciar las reglas de confidencialidad, seguridad, publicación, autoría y propiedad intelectual. La autoría científica se basará en contribuciones reales; el suministro de material, por sí solo, se reconocerá como agradecimiento o provisión de muestra.',
+          'A standard sample does not transfer rights to trademarks, processes or confidential information. If the work includes formulations, non-public results, inventions, facility access or joint development, we will agree before starting on confidentiality, safety, publication, authorship and intellectual-property rules. Scientific authorship will be based on actual contributions; supplying material alone will be recognized through an acknowledgment or sample-provider statement.',
+        ),
+        points: list(
+          ['Alcance y responsabilidades por escrito', 'Autoría basada en contribuciones', 'Confidencialidad e IP acordadas antes de compartir información reservada', 'Libertad para reportar resultados técnicamente sustentados'],
+          ['Written scope and responsibilities', 'Authorship based on contributions', 'Confidentiality and IP agreed before non-public information is shared', 'Freedom to report technically supported results'],
+        ),
+      },
+      {
+        _key: 'academia-cta', _type: 'ctaBlock', internalTitle: 'Iniciar colaboración', enabled: true, tone: 'dark',
+        eyebrow: short('Hablemos de la pregunta', 'Let’s discuss the question'),
+        title: short('Cuéntenos qué quiere comprender, demostrar o llevar más lejos.', 'Tell us what you want to understand, demonstrate or take further.'),
+        body: long('Incluya su institución, línea de investigación, objetivo, etapa del proyecto y la capacidad que busca. Le responderemos con franqueza sobre el encaje y el siguiente paso posible.', 'Include your institution, research line, objective, project stage and the capability you need. We will respond candidly about fit and a possible next step.'),
+        primary: cta('academia-contact', 'Proponer una colaboración', 'Propose a collaboration', 'mailto:grafenodeverdad@gmail.com?subject=Colaboraci%C3%B3n%20Academia%E2%80%93Industria'),
+        secondary: cta('academia-capabilities', 'Conocer capacidades', 'Explore capabilities', 'capacidades'),
       },
     ],
   ),

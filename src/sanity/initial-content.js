@@ -40,7 +40,7 @@ export const solutionTemplates = solutions.map((item, index) => ({
   },
 }))
 
-const pageTitles = { empresa: 'Empresa', capacidades: 'Capacidades', calidad: 'Calidad', recursos: 'Recursos', contacto: 'Contacto', materiales: 'Materiales', soluciones: 'Soluciones' }
+const pageTitles = { empresa: 'Empresa', capacidades: 'Capacidades', 'academia-industria': 'Academia–Industria', calidad: 'Calidad', recursos: 'Recursos', contacto: 'Contacto', materiales: 'Materiales', soluciones: 'Soluciones' }
 
 export const pageTemplates = pageSeedList.map((value) => ({
   id: `page-${value.pageKey}`,

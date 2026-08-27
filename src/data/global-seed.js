@@ -6,11 +6,12 @@ export const siteSettingsSeed = {
   siteName: 'Grafeno de Verdad',
   legalName: 'Grafeno de Verdad, S.A. de C.V.',
   tagline: short('Ingeniería e Innovación en Materiales van der Waals', 'Engineering and Innovation in van der Waals Materials'),
-  contactEmail: 'contacto@grafeno.mx',
+  contactEmail: 'grafenodeverdad@gmail.com',
   navigation: [
     link('materials', 'Materiales', 'Materials', 'materiales'),
     link('solutions', 'Soluciones', 'Solutions', 'soluciones'),
     link('capabilities', 'Capacidades', 'Capabilities', 'capacidades'),
+    link('academia-industry', 'Academia–Industria', 'Academia–Industry', 'academia-industria'),
     link('quality', 'Calidad', 'Quality', 'calidad'),
     link('company', 'Empresa', 'Company', 'empresa'),
     link('resources', 'Recursos', 'Resources', 'recursos'),

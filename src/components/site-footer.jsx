@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import BrandMark from './brand-mark'
-import { CONTACT_EMAIL, pathFor } from '@/lib/site'
+import { CONTACT_EMAIL, normalizeContactEmail, pathFor } from '@/lib/site'
 import { ui } from '@/data/site-content'
 
 export default function SiteFooter({ locale, settings }) {
   const t = ui[locale]
-  const contactEmail = settings?.contactEmail || CONTACT_EMAIL
+  const contactEmail = normalizeContactEmail(settings?.contactEmail || CONTACT_EMAIL)
   const brandName = settings?.legalName || settings?.siteName || 'Grafeno de Verdad, S.A. de C.V.'
   return (
     <footer className="site-footer">
@@ -22,6 +22,7 @@ export default function SiteFooter({ locale, settings }) {
           <p className="footer-label">{settings?.footerExploreLabel?.[locale] || (locale === 'es' ? 'Explorar' : 'Explore')}</p>
           <Link href={pathFor(locale, 'materiales')}>{t.nav.materials}</Link>
           <Link href={pathFor(locale, 'soluciones')}>{t.nav.solutions}</Link>
+          <Link href={pathFor(locale, 'academia-industria')}>{t.nav.academia}</Link>
           <Link href={pathFor(locale, 'calidad')}>{t.nav.quality}</Link>
         </div>
         <div>

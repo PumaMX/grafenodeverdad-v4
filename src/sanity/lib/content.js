@@ -1,6 +1,7 @@
 import { materials as fallbackMaterials, solutions as fallbackSolutions } from '@/data/site-content'
 import { homeSeed, materialDetailSections, pageSeeds, solutionDetailSections } from '@/data/page-seeds'
 import { siteSettingsSeed } from '@/data/global-seed'
+import { CONTACT_EMAIL, normalizeContactEmail } from '@/lib/site'
 import { stegaClean } from 'next-sanity'
 import { sanityFetch } from './live'
 
@@ -18,6 +19,7 @@ const sectionsProjection = `sections[]{
 const homeQuery = `*[_type == "homePage" && _id == "homePage"][0]{
   _id, eyebrow, title, description, primaryCta, secondaryCta, imageCaption, directorMessage, signals,
   heroImage${imageProjection},
+  gallery[]{..., "url": asset->url},
   seo{title, description, noIndex, image${imageProjection}},
   ${sectionsProjection}
 }`
@@ -152,7 +154,13 @@ export async function getEditorialPage(pageKey, options = {}) {
 }
 
 export async function getSiteSettings(options = {}) {
-  return { ...siteSettingsSeed, ...(await safeFetch(settingsQuery, {}, options) || {}) }
+  const settings = { ...siteSettingsSeed, ...(await safeFetch(settingsQuery, {}, options) || {}) }
+  const navigation = Array.isArray(settings.navigation) ? [...settings.navigation] : [...siteSettingsSeed.navigation]
+  if (!navigation.some((item) => stegaClean(item?.href) === 'academia-industria')) {
+    const insertAt = Math.max(0, navigation.findIndex((item) => stegaClean(item?.href) === 'capacidades') + 1)
+    navigation.splice(insertAt, 0, siteSettingsSeed.navigation.find((item) => item.href === 'academia-industria'))
+  }
+  return { ...settings, contactEmail: CONTACT_EMAIL, navigation }
 }
 
 export function localized(value, locale, fallback = '') {
@@ -181,6 +189,31 @@ export function mergeHeroCopy(base = {}, content, locale) {
 export function mergeHomeCopy(base = {}, content, locale) {
   const merged = mergeHeroCopy(base, content, locale)
   if (!content) return merged
+  const localSlides = locale === 'es'
+    ? [
+        { _key: 'materials', src: '/hero-materials-v5.webp', alt: 'Estructura conceptual de un material bidimensional', caption: 'Visualización editorial generada por IA; no representa una instalación o lote específico.' },
+        { _key: 'raman-ai', src: '/hero-raman-ai.webp', alt: 'Visualización conceptual de espectroscopía Raman aplicada a grafeno', caption: 'Visualización conceptual generada por IA; no corresponde a una medición Raman ni a un equipo específico de GdV.' },
+        { _key: 'cvd-ai', src: '/hero-cvd-ai.webp', alt: 'Visualización conceptual de un proceso de depósito químico de vapor', caption: 'Visualización conceptual generada por IA; no es una fotografía ni un diagrama técnico del reactor CVD de GdV.' },
+      ]
+    : [
+        { _key: 'materials', src: '/hero-materials-v5.webp', alt: 'Conceptual structure of a two-dimensional material', caption: 'AI-generated editorial visualization; it does not represent a specific facility or batch.' },
+        { _key: 'raman-ai', src: '/hero-raman-ai.webp', alt: 'Conceptual visualization of Raman spectroscopy applied to graphene', caption: 'AI-generated conceptual visualization; it is not a Raman measurement or a specific piece of GdV equipment.' },
+        { _key: 'cvd-ai', src: '/hero-cvd-ai.webp', alt: 'Conceptual visualization of a chemical vapor deposition process', caption: 'AI-generated conceptual visualization; it is not a photograph or technical diagram of GdV’s CVD reactor.' },
+      ]
+  const managedSlides = [content.heroImage, ...(content.gallery || [])]
+    .filter((image) => image?.url)
+    .map((image, index) => ({
+      _key: image._key || `managed-${index}`,
+      src: image.url,
+      alt: localized(image.alt, locale, ''),
+      caption: localized(image.caption, locale, localized(content.imageCaption, locale, '')),
+    }))
+  const hasManagedGallery = (content.gallery || []).some((image) => image?.url)
+  const slides = (hasManagedGallery
+    ? managedSlides
+    : [...(managedSlides.length ? managedSlides : [localSlides[0]]), ...localSlides.slice(1)])
+    .filter((slide, index, all) => all.findIndex((item) => item.src === slide.src) === index)
+
   return {
     ...merged,
     primary: localized(content.primaryCta?.label, locale, base.primary),
@@ -190,6 +223,7 @@ export function mergeHomeCopy(base = {}, content, locale) {
     imageCaption: localized(content.imageCaption, locale, base.imageCaption),
     heroImage: content.heroImage?.url,
     heroImageAlt: localized(content.heroImage?.alt, locale, ''),
+    slides,
     directorMessage: {
       label: localized(content.directorMessage?.label, locale, locale === 'es' ? 'Mensaje del Director' : "Director's Message"),
       title: localized(content.directorMessage?.title, locale, locale === 'es' ? 'La confianza no se pide: se demuestra' : 'Trust is not asked for. It is demonstrated.'),
@@ -207,6 +241,11 @@ export function mergeHomeCopy(base = {}, content, locale) {
 export function resolveContentHref(locale, href, fallback = `/${locale}`) {
   const cleanHref = stegaClean(href)
   if (!cleanHref) return fallback
+  if (/^mailto:/i.test(cleanHref)) {
+    const [address, query = ''] = cleanHref.slice(7).split('?')
+    const normalizedAddress = normalizeContactEmail(address)
+    return `mailto:${normalizedAddress}${query ? `?${query}` : ''}`
+  }
   if (/^(https?:|mailto:|tel:|#)/.test(cleanHref)) return cleanHref
   if (cleanHref.startsWith(`/${locale}/`) || cleanHref === `/${locale}`) return cleanHref
   return `/${locale}/${cleanHref.replace(/^\//, '')}`

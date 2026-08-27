@@ -30,7 +30,7 @@ export function ContentInstallerTool() {
     setMessage('Revisando el contenido actual…')
 
     try {
-      const existing = await client.fetch('*[_id in $ids]{_id, sections}', { ids })
+      const existing = await client.fetch('*[_id in $ids]{_id, sections, contactEmail, navigation}', { ids })
       const existingById = new Map(existing.map((document) => [document._id, document]))
       let created = 0
       let completed = 0
@@ -47,6 +47,19 @@ export function ContentInstallerTool() {
         const { _id, _type, sections, ...fields } = document
         transaction.patch(_id, (patch) => {
           let next = patch.setIfMissing(fields)
+          if (_id === 'siteSettings') {
+            const legacyEmails = ['contacto@grafeno.mx', 'contacto@grafenodeverdad.mx', 'contacto@grefenodeverdad.mx']
+            if (!current.contactEmail || legacyEmails.includes(current.contactEmail.toLowerCase())) {
+              next = next.set({ contactEmail: 'grafenodeverdad@gmail.com' })
+            }
+            if (!current.navigation?.some((item) => item?.href === 'academia-industria')) {
+              const navigation = [...(current.navigation || [])]
+              const academiaLink = fields.navigation.find((item) => item.href === 'academia-industria')
+              const capabilitiesIndex = navigation.findIndex((item) => item?.href === 'capacidades')
+              navigation.splice(capabilitiesIndex + 1, 0, academiaLink)
+              next = next.set({ navigation })
+            }
+          }
           if (sections && shouldReplaceSections(current.sections)) {
             next = next.set({ sections })
             completed += 1
@@ -69,7 +82,7 @@ export function ContentInstallerTool() {
       <Stack space={5} style={{ maxWidth: 760, margin: '0 auto' }}>
         <Stack space={3}>
           <Heading size={4}>Instalar contenido completo de V5</Heading>
-          <Text size={2} muted>Prepara la portada, las siete páginas interiores, seis materiales y seis soluciones con todos sus bloques editables.</Text>
+          <Text size={2} muted>Prepara la portada, las ocho páginas interiores, seis materiales y seis soluciones con todos sus bloques editables.</Text>
         </Stack>
         <Card padding={4} radius={3} tone="primary" border>
           <Stack space={3}>

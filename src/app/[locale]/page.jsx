@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import DirectorMessageDialog from '@/components/director-message-dialog'
+import HeroCarousel from '@/components/hero-carousel'
 import PageBuilder from '@/components/page-builder'
 import { CONTACT_EMAIL, isLocale, localizedMetadata, pathFor, SITE_URL } from '@/lib/site'
 import { getHomeContent, localizedSeo, mergeHomeCopy, resolveContentHref } from '@/sanity/lib/content'
@@ -44,13 +44,7 @@ export default async function HomePage({ params }) {
               <Link className="button button--ghost" href={resolveContentHref(locale, t.secondaryHref, pathFor(locale, 'contacto'))}>{t.secondary}</Link>
             </div>
           </div>
-          <figure className="hero__visual">
-            <div className="hero__image-wrap">
-              <Image src={t.heroImage || '/hero-materials-v5.webp'} alt={t.heroImageAlt || ''} fill priority sizes="(max-width: 760px) 92vw, 46vw" className="hero__image" />
-              <div className="material-tag"><span>sp²</span><strong>Carbon</strong><small>2D lattice</small></div>
-            </div>
-            <figcaption>{t.imageCaption}</figcaption>
-          </figure>
+          <HeroCarousel slides={t.slides} locale={locale} />
         </div>
         <ul className="container signal-strip" aria-label={locale === 'es' ? 'Datos clave' : 'Key facts'}>
           <li className="signal-strip__director"><DirectorMessageDialog locale={locale} message={t.directorMessage} /></li>

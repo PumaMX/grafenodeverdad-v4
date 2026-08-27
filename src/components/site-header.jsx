@@ -12,6 +12,7 @@ const navPaths = [
   ['materials', 'materiales'],
   ['solutions', 'soluciones'],
   ['capabilities', 'capacidades'],
+  ['academia', 'academia-industria'],
   ['quality', 'calidad'],
   ['company', 'empresa'],
   ['resources', 'recursos'],
