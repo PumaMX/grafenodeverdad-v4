@@ -1,5 +1,5 @@
 export const SITE_NAME = 'Grafeno de Verdad'
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://grafenodeverdad-v4.vercel.app'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://grafenodeverdad.vercel.app'
 export const CONTACT_EMAIL = 'grafenodeverdad@gmail.com'
 export const LOCALES = ['es', 'en']
 
