@@ -71,7 +71,7 @@ export function ContentInstallerTool() {
     setMessage('Revisando el contenido actual…')
 
     try {
-      const existing = await client.fetch('*[_id in $ids]{_id, sections, contactEmail, navigation, directorMessage}', { ids })
+      const existing = await client.fetch('*[_id in $ids]{_id, sections, contactEmail, navigation, directorMessage, title, description, name, summary, leadImage, heroImage, applicationProfile}', { ids })
       const existingById = new Map(existing.map((document) => [document._id, document]))
       let created = 0
       let completed = 0
@@ -111,7 +111,24 @@ export function ContentInstallerTool() {
               })
             }
           }
-          if (sections && shouldReplaceSections(current.sections)) {
+          if (_id === 'page.soluciones') {
+            const legacyKeys = (current.sections || []).map((section) => section?._key).filter(Boolean)
+            const isLegacySolutionsPage = legacyKeys.length === 0 || (legacyKeys.length === 2 && legacyKeys.includes('solutions') && legacyKeys.includes('custom-note'))
+            if (current.title?.es === 'Soluciones') next = next.set({ title: fields.title })
+            if (current.description?.es === 'Programas de formulación e integración construidos alrededor de su proceso y una métrica de éxito, no alrededor de una palabra de moda.') next = next.set({ description: fields.description })
+            if (!current.heroImage) next = next.set({ heroImage: fields.heroImage })
+            if (isLegacySolutionsPage) {
+              next = next.set({ sections })
+              completed += 1
+            }
+          }
+          if (_id === 'solution.tintas-conductoras' && current.name?.es === 'Tintas conductoras') {
+            next = next.set({ name: fields.name, summary: fields.summary })
+          }
+          if (_id === 'solution.recubrimientos-funcionales' && current.name?.es === 'Recubrimientos funcionales') {
+            next = next.set({ name: fields.name, summary: fields.summary, outcomes: fields.outcomes })
+          }
+          if (_id !== 'page.soluciones' && sections && shouldReplaceSections(current.sections)) {
             next = next.set({ sections })
             completed += 1
           }
@@ -133,12 +150,12 @@ export function ContentInstallerTool() {
       <Stack space={5} style={{ maxWidth: 760, margin: '0 auto' }}>
         <Stack space={3}>
           <Heading size={4}>Instalar contenido completo de V5</Heading>
-          <Text size={2} muted>Prepara la portada, las ocho páginas interiores, seis materiales y seis soluciones con todos sus bloques editables.</Text>
+          <Text size={2} muted>Prepara la portada, las ocho páginas interiores, seis materiales y diez familias de soluciones. Incluye las fichas editables de tintas conductoras, textiles funcionales y recubrimientos marinos.</Text>
         </Stack>
         <Card padding={4} radius={3} tone="primary" border>
           <Stack space={3}>
             <Text weight="semibold">Qué hará</Text>
-            <Text>Creará documentos que todavía no existan, completará campos vacíos y reemplazará las dos secciones antiguas de introducción por el constructor completo. No sobrescribe textos que ya hayas modificado.</Text>
+            <Text>Creará documentos que todavía no existan, completará campos vacíos y actualizará la estructura anterior de Soluciones. No modifica la portada ni sobrescribe textos ya editados fuera de los campos heredados reconocidos.</Text>
           </Stack>
         </Card>
         <Flex align="center" gap={3} wrap="wrap">

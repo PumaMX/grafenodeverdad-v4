@@ -2,6 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import PageBuilder from '@/components/page-builder'
+import { editorialImageStyle, ImageProvenance } from '@/components/editorial-image-meta'
+import SolutionProjects from '@/components/solution-projects'
+import SolutionApplicationProfile from '@/components/solution-application-profile'
 import { solutions as solutionSeeds } from '@/data/site-content'
 import { isLocale, localizedMetadata, pathFor } from '@/lib/site'
 import { getSolution, localized, localizedSeo } from '@/sanity/lib/content'
@@ -27,10 +30,12 @@ export default async function SolutionDetailPage({ params }) {
   const solution = await getSolution(slug)
   if (!isLocale(locale) || !solution) notFound()
   const t = labels[locale]
+  const hasApplicationProfile = Boolean(solution.applicationProfile)
+  const excludedFallbackSections = new Set(['solution-process', 'solution-deliverables', 'solution-cta'])
   const sections = [
     ...(solution.body?.[locale]?.length ? [{ _key: 'solution-body', _type: 'richTextBlock', enabled: true, surface: 'paper', content: solution.body }] : []),
     ...(solution.gallery?.length ? [{ _key: 'solution-gallery', _type: 'galleryBlock', enabled: true, surface: 'paper', columns: 3, images: solution.gallery }] : []),
-    ...(solution.sections || []).map((section) => section._type === 'ctaBlock' ? {
+    ...(solution.sections || []).filter((section) => !hasApplicationProfile || !excludedFallbackSections.has(section._key)).map((section) => section._type === 'ctaBlock' ? {
       ...section,
       primary: section.primary?.href?.includes('tipo=proyecto') ? { ...section.primary, href: `contacto?tipo=proyecto&solucion=${solution.slug}` } : section.primary,
     } : section),
@@ -38,7 +43,8 @@ export default async function SolutionDetailPage({ params }) {
 
   return (
     <>
-      <section className="detail-hero"><div className="container"><Link className="back-link" href={pathFor(locale, 'soluciones')}>← {t.back}</Link><div className="detail-hero__grid"><div><p className="eyebrow eyebrow--accent">{solution.code}</p><h1>{localized(solution.name, locale)}</h1><p>{localized(solution.summary, locale)}</p></div><div className="detail-code"><span>{t.promise}</span><strong>{solution.outcomes?.[locale]?.[0] || solution.code}</strong><small>{locale === 'es' ? 'Sujeto a validación en su sistema' : 'Subject to validation in your system'}</small></div></div>{solution.leadImage?.url && <figure className="detail-hero__media"><Image src={solution.leadImage.url} alt={localized(solution.leadImage.alt, locale)} fill priority sizes="92vw" />{localized(solution.leadImage.caption, locale) && <figcaption>{localized(solution.leadImage.caption, locale)}</figcaption>}</figure>}</div></section>
+      <section className="detail-hero"><div className="container"><Link className="back-link" href={pathFor(locale, 'soluciones')}>← {t.back}</Link><div className="detail-hero__grid"><div><p className="eyebrow eyebrow--accent">{solution.code}</p>{hasApplicationProfile && <span className="development-badge development-badge--dark">{localized(solution.applicationProfile.publicStatus, locale)}</span>}<h1>{localized(solution.name, locale)}</h1><p>{localized(solution.summary, locale)}</p></div><div className="detail-code"><span>{t.promise}</span><strong>{solution.outcomes?.[locale]?.[0] || solution.code}</strong><small>{locale === 'es' ? 'Sujeto a validación en su sistema' : 'Subject to validation in your system'}</small></div></div>{solution.leadImage?.url && <figure className="detail-hero__media"><Image src={solution.leadImage.url} alt={localized(solution.leadImage.alt, locale)} fill priority sizes="92vw" style={editorialImageStyle(solution.leadImage)} /><ImageProvenance image={solution.leadImage} locale={locale} />{localized(solution.leadImage.caption, locale) && <figcaption>{localized(solution.leadImage.caption, locale)}</figcaption>}</figure>}</div></section>
+      {hasApplicationProfile ? <SolutionApplicationProfile profile={solution.applicationProfile} locale={locale} solution={solution} /> : <SolutionProjects projects={solution.projects} locale={locale} />}
       <PageBuilder sections={sections} locale={locale} />
     </>
   )

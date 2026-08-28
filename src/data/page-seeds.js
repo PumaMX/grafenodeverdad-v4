@@ -14,12 +14,13 @@ const item = (key, { number, value, title, body, points, link, image } = {}) => 
   ...(image ? { image } : {}),
 })
 
-const page = (pageKey, eyebrow, title, description, sections) => ({
+const page = (pageKey, eyebrow, title, description, sections, heroImage) => ({
   pageKey,
   eyebrow: short(...eyebrow),
   title: short(...title),
   description: long(...description),
   sections,
+  ...(heroImage ? { heroImage } : {}),
 })
 
 export const homeSeed = {
@@ -383,17 +384,31 @@ export const pageSeeds = {
     ],
   ),
   soluciones: page(
-    'soluciones', ['Integración y desempeño', 'Integration and performance'], ['Soluciones', 'Solutions'],
-    ['Programas de formulación e integración construidos alrededor de su proceso y una métrica de éxito, no alrededor de una palabra de moda.', 'Formulation and integration programs built around your process and a success metric—not around a buzzword.'],
+    'soluciones', ['Integración y desempeño', 'Integration and performance'], ['Aplicaciones y soluciones en desarrollo', 'Applications and solutions in development'],
+    ['Éstas son algunas de las aplicaciones que exploramos y desarrollamos con nuestros aliados. Cada proyecto parte de un reto concreto y avanza mediante selección del material, formulación, pruebas comparativas y escalamiento. ¿Te interesa alguna de estas líneas o tu reto no aparece aquí? Cuéntanoslo. Podemos diseñar contigo un proyecto piloto con objetivos, métricas y criterios de decisión claros.', 'These are some of the applications we explore and develop with our partners. Each project starts with a specific challenge and advances through material selection, formulation, comparative testing and scale-up. Interested in one of these lines, or is your challenge not listed? Tell us about it. We can design a pilot project with clear objectives, metrics and decision criteria.'],
     [
-      { _key: 'solutions', _type: 'catalogBlock', internalTitle: 'Catálogo completo', enabled: true, surface: 'paper', catalogType: 'solutions', display: 'cards', itemLabel: short('Ver solución', 'View solution') },
+      {
+        _key: 'development-platform', _type: 'splitTextBlock', internalTitle: 'Una plataforma común de co-desarrollo', enabled: true, surface: 'light', layout: 'text',
+        eyebrow: short('Una plataforma, distintos retos', 'One platform, different challenges'),
+        title: short('La amplitud nace de un mismo método de trabajo.', 'The breadth comes from one shared method.'),
+        lead: long('Seleccionamos el material grafénico, formulamos para la matriz y el proceso, caracterizamos las variables críticas y validamos con el socio antes de escalar.', 'We select the graphene material, formulate for the matrix and process, characterize critical variables and validate with the partner before scaling.'),
+        body: long('Estas fichas muestran ejemplos de aplicación y rutas de colaboración. No son un catálogo de productos terminados ni sustituyen la validación en el sistema real.', 'These profiles present application examples and collaboration pathways. They are not a catalog of finished products and do not replace validation in the real system.'),
+      },
+      {
+        _key: 'solutions', _type: 'catalogBlock', internalTitle: 'Aplicaciones y familias de solución', enabled: true, surface: 'paper', catalogType: 'solutions', display: 'cards',
+        eyebrow: short('Ejemplos de aplicación', 'Application examples'),
+        title: short('Proyectos que comienzan con una pregunta medible.', 'Projects that begin with a measurable question.'),
+        body: long('Las tres primeras fichas presentan líneas en desarrollo con alcance, evidencia y siguiente hito. El resto muestra otras familias que podemos explorar mediante co-desarrollo.', 'The first three profiles present development lines with scope, evidence and a next milestone. The remaining cards show other families we can explore through co-development.'),
+        itemLabel: short('Explorar aplicación', 'Explore application'),
+      },
       {
         _key: 'custom-note', _type: 'ctaBlock', internalTitle: 'Desarrollo especial', enabled: true, tone: 'panel',
-        eyebrow: short('Desarrollo especial', 'Special development'), title: short('¿Su reto no aparece aquí?', 'Is your challenge not listed here?'),
-        body: long('La ruta a la medida empieza con un brief técnico y una hipótesis que podamos medir.', 'A custom path begins with a technical brief and a hypothesis we can measure.'),
-        primary: cta('custom-development', 'Iniciar un desarrollo', 'Start a development', 'contacto'),
+        eyebrow: short('Conversemos', 'Let’s talk'), title: short('¿Tu reto no aparece aquí?', 'Is your challenge not listed here?'),
+        body: long('Cuéntanos qué quieres mejorar, sobre qué material o proceso y cómo sabrás que funcionó. Podemos convertirlo en un brief técnico y diseñar un proyecto piloto con controles y criterios de decisión.', 'Tell us what you need to improve, in which material or process, and how success will be measured. We can turn it into a technical brief and design a pilot with controls and decision criteria.'),
+        primary: cta('custom-development', 'Platicar sobre mi reto', 'Discuss my challenge', 'contacto?tipo=proyecto'),
       },
     ],
+    localEditorialImage('/soluciones/plataforma-aplicaciones-deeptech-v1.webp', ['Visualización DeepTech clara de una plataforma de materiales grafénicos conectada con textiles, tintas y recubrimientos.', 'Bright DeepTech visualization of a graphene-materials platform connected to textiles, inks and coatings.'], ['Visualización conceptual de la plataforma de co-desarrollo de GdV; no representa resultados experimentales ni productos terminados.', 'Conceptual visualization of the GdV co-development platform; it does not represent experimental results or finished products.']),
   ),
 }
 
@@ -447,3 +462,4 @@ export const solutionDetailSections = [
     primary: cta('start', 'Iniciar proyecto', 'Start a project', 'contacto?tipo=proyecto'),
   },
 ]
+import { localEditorialImage } from './application-profiles.js'

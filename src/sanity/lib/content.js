@@ -6,7 +6,8 @@ import { stegaClean } from 'next-sanity'
 import { sanityFetch } from './live'
 
 const imageProjection = `{
-  alt, caption, credit, rights, hotspot, crop, "url": asset->url
+  alt, caption, fit, provenance, credit, rights, sourceUrl, fallbackPath, hotspot, crop,
+  "url": coalesce(asset->url, fallbackPath)
 }`
 
 const sectionsProjection = `sections[]{
@@ -34,6 +35,8 @@ const materialsQuery = `*[_type == "material" && defined(slug.current)] | order(
 
 const solutionsQuery = `*[_type == "solution" && defined(slug.current)] | order(order asc){
   _id, code, "slug": slug.current, name, summary, outcomes, featured, order, body,
+  projects[]{..., image${imageProjection}},
+  applicationProfile{..., technicalFigure${imageProjection}, precedents[]{...}, references[]{...}},
   gallery[]{..., "url": asset->url},
   leadImage${imageProjection},
   seo{title, description, noIndex, image${imageProjection}},
@@ -74,6 +77,7 @@ function mergePage(fallback, content) {
   return {
     ...fallback,
     ...content,
+    heroImage: content.heroImage?.url ? content.heroImage : fallback.heroImage,
     sections: usableSections(content, fallback.sections),
   }
 }
@@ -118,9 +122,18 @@ function mergeCatalog(fallback, content, detailSections) {
   const merged = fallbackWithSections.map((item) => {
     const published = bySlug.get(item.slug)
     if (!published) return item
+    const name = published.name?.es === 'Tintas conductoras' || published.name?.es === 'Recubrimientos funcionales' ? item.name : (published.name || item.name)
+    const legacySummary = published.summary?.es === 'Formulaciones adaptadas al sustrato, método de depósito y ventana de curado.' || published.summary?.es === 'Sistemas para barrera, disipación, conductividad o protección de superficies.'
     return {
       ...item,
       ...published,
+      name,
+      summary: legacySummary ? item.summary : (published.summary || item.summary),
+      leadImage: published.leadImage?.url ? published.leadImage : item.leadImage,
+      applicationProfile: published.applicationProfile
+        ? { ...item.applicationProfile, ...published.applicationProfile }
+        : item.applicationProfile,
+      projects: Array.isArray(published.projects) && published.projects.length ? published.projects : item.projects,
       sections: usableSections(published, item.sections),
     }
   })
@@ -167,7 +180,16 @@ export async function getSolution(slug, options = {}) {
 
 export async function getEditorialPage(pageKey, options = {}) {
   const fallback = pageSeeds[pageKey]
-  return mergePage(fallback, await safeFetch(pageQuery, { pageKey }, options))
+  const published = await safeFetch(pageQuery, { pageKey }, options)
+  if (pageKey !== 'soluciones' || !published) return mergePage(fallback, published)
+  const keys = (published.sections || []).map((section) => stegaClean(section?._key)).filter(Boolean)
+  const legacySections = keys.length === 2 && keys.includes('solutions') && keys.includes('custom-note')
+  return mergePage(fallback, {
+    ...published,
+    title: stegaClean(published.title?.es) === 'Soluciones' ? fallback.title : published.title,
+    description: stegaClean(published.description?.es) === 'Programas de formulación e integración construidos alrededor de su proceso y una métrica de éxito, no alrededor de una palabra de moda.' ? fallback.description : published.description,
+    sections: legacySections ? fallback.sections : published.sections,
+  })
 }
 
 export async function getSiteSettings(options = {}) {

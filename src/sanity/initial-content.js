@@ -36,6 +36,9 @@ export const solutionTemplates = solutions.map((item, index) => ({
     name: { _type: 'localizedString', ...item.name },
     summary: { _type: 'localizedText', ...item.summary },
     outcomes: localizedList(item.outcomes),
+    ...(item.projects ? { projects: item.projects } : {}),
+    ...(item.leadImage ? { leadImage: item.leadImage } : {}),
+    ...(item.applicationProfile ? { applicationProfile: item.applicationProfile } : {}),
     sections: solutionDetailSections,
   },
 }))

@@ -57,10 +57,118 @@ export const editorialImage = defineType({
   type: 'image',
   options: { hotspot: true },
   fields: [
+    defineField({
+      name: 'fallbackPath',
+      title: 'Imagen predeterminada del sitio',
+      type: 'string',
+      readOnly: true,
+      description: 'Ruta de respaldo incluida en el sitio. Al cargar una imagen en Sanity, la imagen cargada tendrá prioridad.',
+    }),
+    defineField({ name: 'url', title: 'URL resuelta', type: 'string', hidden: true, readOnly: true }),
     defineField({ name: 'alt', title: 'Texto alternativo', type: 'localizedString', description: 'Describa la información visual; déjelo vacío solo si la imagen es decorativa.' }),
     defineField({ name: 'caption', title: 'Pie de imagen', type: 'localizedText' }),
+    defineField({
+      name: 'fit',
+      title: 'Encuadre en la página',
+      type: 'string',
+      description: 'Use “Completa” para micrografías, gráficas o imágenes con escalas y rótulos que no deben recortarse.',
+      options: { layout: 'radio', list: [{ title: 'Llenar el marco', value: 'cover' }, { title: 'Mostrar completa', value: 'contain' }] },
+      initialValue: 'cover',
+    }),
+    defineField({
+      name: 'provenance',
+      title: 'Procedencia visual',
+      type: 'string',
+      description: 'Permite distinguir evidencia de GdV de material externo o de una visualización conceptual.',
+      options: { list: [{ title: 'Evidencia o fotografía de GdV', value: 'gdv' }, { title: 'Colaborador o tercero autorizado', value: 'thirdParty' }, { title: 'Visualización conceptual', value: 'conceptual' }] },
+    }),
     defineField({ name: 'credit', title: 'Crédito o autor', type: 'string' }),
     defineField({ name: 'rights', title: 'Derechos y procedencia', type: 'string', description: 'Registre licencia, propietario o autorización de uso.' }),
+    defineField({ name: 'sourceUrl', title: 'Fuente o licencia', type: 'url' }),
+  ],
+})
+
+export const solutionProject = defineType({
+  name: 'solutionProject',
+  title: 'Proyecto o ruta de aplicación',
+  type: 'object',
+  fields: [
+    defineField({ name: 'title', title: 'Nombre del proyecto', type: 'localizedString' }),
+    defineField({
+      name: 'status',
+      title: 'Estado editorial',
+      type: 'string',
+      description: 'Describe el grado de preparación sin convertir una hipótesis en una promesa comercial.',
+      options: {
+        layout: 'radio',
+        list: [
+          { title: 'Disponible para evaluación técnica', value: 'evaluation' },
+          { title: 'Línea de co-desarrollo', value: 'coDevelopment' },
+          { title: 'Oportunidad de proyecto', value: 'concept' },
+        ],
+      },
+      initialValue: 'coDevelopment',
+    }),
+    defineField({ name: 'summary', title: 'Descripción', type: 'localizedText' }),
+    defineField({ name: 'objective', title: 'Objetivo técnico', type: 'localizedText' }),
+    defineField({ name: 'validation', title: 'Qué se mediría', type: 'localizedStringList' }),
+    defineField({ name: 'image', title: 'Imagen del proyecto', type: 'editorialImage' }),
+  ],
+  preview: { select: { title: 'title.es', subtitle: 'status', media: 'image' } },
+})
+
+export const scientificPrecedent = defineType({
+  name: 'scientificPrecedent',
+  title: 'Precedente científico',
+  type: 'object',
+  fields: [
+    defineField({ name: 'milestone', title: 'Hito o referencia breve', type: 'string' }),
+    defineField({ name: 'contribution', title: 'Contribución reportada', type: 'localizedText' }),
+    defineField({ name: 'implication', title: 'Relevancia para esta línea', type: 'localizedText' }),
+    defineField({ name: 'boundary', title: 'Límite de la comparación', type: 'localizedText' }),
+    defineField({ name: 'url', title: 'Publicación', type: 'url' }),
+  ],
+  preview: { select: { title: 'milestone', subtitle: 'contribution.es' } },
+})
+
+export const scientificReference = defineType({
+  name: 'scientificReference',
+  title: 'Referencia científica',
+  type: 'object',
+  fields: [
+    defineField({ name: 'citation', title: 'Referencia', type: 'text', rows: 3 }),
+    defineField({ name: 'url', title: 'DOI o fuente', type: 'url' }),
+    defineField({ name: 'context', title: 'Nota editorial', type: 'localizedText' }),
+  ],
+  preview: { select: { title: 'citation', subtitle: 'url' } },
+})
+
+export const solutionApplicationProfile = defineType({
+  name: 'solutionApplicationProfile',
+  title: 'Ficha de aplicación en desarrollo',
+  type: 'object',
+  fields: [
+    defineField({ name: 'publicStatus', title: 'Estado público', type: 'localizedString' }),
+    defineField({ name: 'trl', title: 'TRL actual', type: 'number', description: 'Visible únicamente dentro de la ficha detallada.' }),
+    defineField({ name: 'technicalName', title: 'Nombre técnico', type: 'localizedText' }),
+    defineField({ name: 'industrialProblem', title: 'Problema industrial', type: 'localizedText' }),
+    defineField({ name: 'grapheneSolution', title: 'Solución basada en grafeno', type: 'localizedText' }),
+    defineField({ name: 'expectedAdvantages', title: 'Ventajas esperadas', type: 'localizedText' }),
+    defineField({ name: 'maturity', title: 'Estado de madurez', type: 'localizedText' }),
+    defineField({ name: 'evidence', title: 'Evidencia disponible', type: 'localizedText' }),
+    defineField({ name: 'nextMilestone', title: 'Siguiente hito', type: 'localizedText' }),
+    defineField({ name: 'targetFunctions', title: 'Funciones objetivo', type: 'localizedStringList' }),
+    defineField({ name: 'sectors', title: 'Sectores objetivo', type: 'localizedStringList' }),
+    defineField({ name: 'modality', title: 'Modalidad', type: 'localizedText' }),
+    defineField({ name: 'websiteCopy', title: 'Texto público de introducción', type: 'localizedStringList' }),
+    defineField({ name: 'pilotScope', title: 'Alcance del piloto', type: 'localizedText' }),
+    defineField({ name: 'pilotValidation', title: 'Validación del piloto', type: 'localizedText' }),
+    defineField({ name: 'pilotGate', title: 'Criterio de avance', type: 'localizedText' }),
+    defineField({ name: 'contactPrompt', title: 'Llamado a contacto', type: 'localizedText' }),
+    defineField({ name: 'technicalFigure', title: 'Figura técnica autorizada', type: 'editorialImage' }),
+    defineField({ name: 'scientificContext', title: 'Contexto científico', type: 'localizedText' }),
+    defineField({ name: 'precedents', title: 'Precedentes científicos', type: 'array', of: [defineArrayMember({ type: 'scientificPrecedent' })] }),
+    defineField({ name: 'references', title: 'Referencias selectivas', type: 'array', of: [defineArrayMember({ type: 'scientificReference' })] }),
   ],
 })
 

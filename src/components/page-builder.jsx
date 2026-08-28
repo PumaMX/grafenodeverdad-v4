@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { stegaClean } from 'next-sanity'
 import { ItemCard, SectionHeading } from '@/components/primitives'
+import { editorialImageStyle, ImageProvenance } from '@/components/editorial-image-meta'
 import ProjectBriefForm from '@/components/project-brief-form'
 import { CONTACT_EMAIL, pathFor } from '@/lib/site'
 import { getMaterials, getSolutions, localized, resolveContentHref } from '@/sanity/lib/content'
@@ -56,7 +57,8 @@ function BlockImage({ image, locale, className = 'builder-media' }) {
   if (!image?.url) return null
   return (
     <figure className={className}>
-      <Image src={image.url} alt={blockText(image, 'alt', locale)} fill sizes="(max-width: 820px) 92vw, 44vw" />
+      <Image src={image.url} alt={blockText(image, 'alt', locale)} fill sizes="(max-width: 820px) 92vw, 44vw" style={editorialImageStyle(image)} />
+      <ImageProvenance image={image} locale={locale} />
       {blockText(image, 'caption', locale) && <figcaption>{blockText(image, 'caption', locale)}</figcaption>}
     </figure>
   )
@@ -136,8 +138,9 @@ function Process({ block, locale }) {
 }
 
 function Catalog({ block, locale, items }) {
-  const visibleItems = block.limit ? items.slice(0, block.limit) : items
   const isMaterials = stegaClean(block.catalogType) === 'materials'
+  const orderedItems = isMaterials ? items : [...items].sort((a, b) => Number(Boolean(b.applicationProfile)) - Number(Boolean(a.applicationProfile)))
+  const visibleItems = block.limit ? orderedItems.slice(0, block.limit) : orderedItems
   const base = isMaterials ? 'materiales' : 'soluciones'
   const label = blockText(block, 'itemLabel', locale, locale === 'es' ? 'Ver perfil' : 'View profile')
   const action = block.moreLink?.href ? <Action action={block.moreLink} locale={locale} className="text-link text-link--standalone" /> : null
@@ -159,7 +162,7 @@ function Catalog({ block, locale, items }) {
           </div>
         ) : (
           <div className="card-grid card-grid--three">
-            {visibleItems.map((item) => <ItemCard key={item.slug} item={item} locale={locale} href={pathFor(locale, `${base}/${stegaClean(item.slug)}`)} label={label} />)}
+            {visibleItems.map((item) => <ItemCard key={item.slug} item={item} locale={locale} href={pathFor(locale, `${base}/${stegaClean(item.slug)}`)} label={label} isSolution={!isMaterials} />)}
           </div>
         )}
       </div>

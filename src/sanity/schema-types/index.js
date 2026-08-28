@@ -10,6 +10,10 @@ import {
   localizedText,
   processStep,
   seoFields,
+  scientificPrecedent,
+  scientificReference,
+  solutionApplicationProfile,
+  solutionProject,
 } from './objects.js'
 import { editorialPage, homePage, material, resource, siteSettings, solution } from './documents.js'
 import { materialTemplates, pageTemplates, solutionTemplates } from '../initial-content.js'
@@ -25,6 +29,10 @@ export const schemaTypes = [
   editorialImage,
   keyFact,
   processStep,
+  scientificPrecedent,
+  scientificReference,
+  solutionApplicationProfile,
+  solutionProject,
   contentSection,
   seoFields,
   ...pageBlockTypes,
