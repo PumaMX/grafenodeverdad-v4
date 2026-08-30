@@ -143,6 +143,19 @@ export const scientificReference = defineType({
   preview: { select: { title: 'citation', subtitle: 'url' } },
 })
 
+export const impactFact = defineType({
+  name: 'impactFact',
+  title: 'Dato de contexto e impacto',
+  type: 'object',
+  fields: [
+    defineField({ name: 'value', title: 'Cifra o valor', type: 'string' }),
+    defineField({ name: 'label', title: 'Qué representa', type: 'localizedString' }),
+    defineField({ name: 'context', title: 'Alcance, supuesto o cautela', type: 'localizedText' }),
+    defineField({ name: 'url', title: 'Fuente pública', type: 'url' }),
+  ],
+  preview: { select: { title: 'value', subtitle: 'label.es' } },
+})
+
 export const solutionApplicationProfile = defineType({
   name: 'solutionApplicationProfile',
   title: 'Ficha de aplicación en desarrollo',
@@ -167,6 +180,8 @@ export const solutionApplicationProfile = defineType({
     defineField({ name: 'contactPrompt', title: 'Llamado a contacto', type: 'localizedText' }),
     defineField({ name: 'technicalFigure', title: 'Figura técnica autorizada', type: 'editorialImage' }),
     defineField({ name: 'scientificContext', title: 'Contexto científico', type: 'localizedText' }),
+    defineField({ name: 'impactContext', title: 'Contexto de cifras públicas', type: 'localizedText' }),
+    defineField({ name: 'impactFacts', title: 'Cifras públicas y escenarios', type: 'array', of: [defineArrayMember({ type: 'impactFact' })] }),
     defineField({ name: 'precedents', title: 'Precedentes científicos', type: 'array', of: [defineArrayMember({ type: 'scientificPrecedent' })] }),
     defineField({ name: 'references', title: 'Referencias selectivas', type: 'array', of: [defineArrayMember({ type: 'scientificReference' })] }),
   ],

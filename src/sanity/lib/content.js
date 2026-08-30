@@ -36,7 +36,7 @@ const materialsQuery = `*[_type == "material" && defined(slug.current)] | order(
 const solutionsQuery = `*[_type == "solution" && defined(slug.current)] | order(order asc){
   _id, code, "slug": slug.current, name, summary, outcomes, featured, order, body,
   projects[]{..., image${imageProjection}},
-  applicationProfile{..., technicalFigure${imageProjection}, precedents[]{...}, references[]{...}},
+  applicationProfile{..., technicalFigure${imageProjection}, impactFacts[]{...}, precedents[]{...}, references[]{...}},
   gallery[]{..., "url": asset->url},
   leadImage${imageProjection},
   seo{title, description, noIndex, image${imageProjection}},

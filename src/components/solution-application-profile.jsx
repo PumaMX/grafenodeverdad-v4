@@ -11,6 +11,7 @@ const copy = {
     sectors: 'Sectores objetivo', pilot: 'Proyecto piloto', scope: 'Alcance', validation: 'Qué validaremos', gate: 'Criterio de avance',
     precedents: 'Precedentes científicos', precedentIntro: 'Referencias internacionales que orientan la ruta técnica. No implican colaboración, aval, licencia ni transferencia tecnológica a GdV.',
     contribution: 'Qué reporta', implication: 'Qué aporta a la ruta GdV', boundary: 'Límite de la comparación', references: 'Referencias selectivas',
+    impact: 'La escala del reto', source: 'Fuente',
     contact: 'Convirtamos el reto en un piloto verificable', contactRole: 'Director de Investigación, Desarrollo Tecnológico e Innovación (I+D+i)', start: 'Platicar sobre el proyecto',
   },
   en: {
@@ -19,6 +20,7 @@ const copy = {
     sectors: 'Target sectors', pilot: 'Pilot project', scope: 'Scope', validation: 'What we will validate', gate: 'Advancement criterion',
     precedents: 'Scientific precedents', precedentIntro: 'International references that inform the technical pathway. They do not imply collaboration, endorsement, licensing or technology transfer to GdV.',
     contribution: 'Reported contribution', implication: 'Relevance to GdV’s pathway', boundary: 'Comparison boundary', references: 'Selected references',
+    impact: 'The scale of the challenge', source: 'Source',
     contact: 'Turn the challenge into a verifiable pilot', contactRole: 'Director of Research, Technological Development and Innovation (R&D+i)', start: 'Discuss the project',
   },
 }
@@ -39,6 +41,7 @@ export default function SolutionApplicationProfile({ profile, locale, solution }
   const websiteCopy = profile.websiteCopy?.[locale] || []
   const functions = profile.targetFunctions?.[locale] || []
   const sectors = profile.sectors?.[locale] || []
+  const impactFacts = profile.impactFacts || []
   const figure = profile.technicalFigure
 
   return (
@@ -62,6 +65,18 @@ export default function SolutionApplicationProfile({ profile, locale, solution }
           </div>
         </div>
       </section>
+
+      {impactFacts.length > 0 && (
+        <section className="section application-impact"><div className="container">
+          <div className="section-heading"><div><p className="eyebrow">{locale === 'es' ? 'Datos públicos y escenarios transparentes' : 'Public data and transparent scenarios'}</p><h2>{t.impact}</h2><p>{localized(profile.impactContext, locale)}</p></div></div>
+          <div className="application-impact-grid">{impactFacts.map((fact) => <article className="impact-fact" key={fact._key || `${fact.value}-${localized(fact.label, locale)}`}>
+            <strong>{fact.value}</strong>
+            <h3>{localized(fact.label, locale)}</h3>
+            <p>{localized(fact.context, locale)}</p>
+            {fact.url && <ExternalLink href={fact.url}>{t.source}</ExternalLink>}
+          </article>)}</div>
+        </div></section>
+      )}
 
       <section className="section application-status">
         <div className="container">

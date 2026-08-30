@@ -12,6 +12,7 @@ import {
   seoFields,
   scientificPrecedent,
   scientificReference,
+  impactFact,
   solutionApplicationProfile,
   solutionProject,
 } from './objects.js'
@@ -31,6 +32,7 @@ export const schemaTypes = [
   processStep,
   scientificPrecedent,
   scientificReference,
+  impactFact,
   solutionApplicationProfile,
   solutionProject,
   contentSection,
