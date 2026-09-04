@@ -111,6 +111,15 @@ function mergeDirectorMessage(fallback, content) {
   }
 }
 
+function preserveHomeSignatureCopy(sections = []) {
+  const finalCta = homeSeed.sections.find((section) => section._key === 'final-cta')
+  return sections.map((section) => (
+    stegaClean(section?._key) === 'final-cta'
+      ? { ...section, title: finalCta.title }
+      : section
+  ))
+}
+
 function mergeCatalog(fallback, content, detailSections) {
   const fallbackWithSections = fallback.map((item) => ({
     ...item,
@@ -148,8 +157,10 @@ function mergeCatalog(fallback, content, detailSections) {
 
 export async function getHomeContent(options = {}) {
   const content = await safeFetch(homeQuery, {}, options)
+  const merged = mergePage(homeSeed, content)
   return {
-    ...mergePage(homeSeed, content),
+    ...merged,
+    sections: preserveHomeSignatureCopy(merged.sections),
     directorMessage: mergeDirectorMessage(homeSeed.directorMessage, content?.directorMessage),
   }
 }

@@ -127,7 +127,7 @@ export const homeSeed = {
     },
     {
       _key: 'final-cta', _type: 'ctaBlock', internalTitle: 'Llamada final', enabled: true, tone: 'dark',
-      eyebrow: short('Su siguiente experimento', 'Your next experiment'), title: short('Cuéntenos qué quiere mejorar.', 'Tell us what you want to improve.'),
+      eyebrow: short('Su siguiente experimento', 'Your next experiment'), title: short('¿Tiene un problema de materiales? Desarrollemos una solución.', 'Have a materials problem? Let us develop a solution.'),
       body: long('Con la aplicación, la matriz, el proceso y una métrica objetivo podemos proponer el siguiente paso con más precisión.', 'With the application, matrix, process and a target metric, we can propose a more precise next step.'),
       primary: cta('final-primary', 'Preparar un brief técnico', 'Prepare a technical brief', 'contacto'),
       secondary: cta('final-secondary', 'Escribir directamente', 'Email us directly', 'mailto:grafenodeverdad@gmail.com'),

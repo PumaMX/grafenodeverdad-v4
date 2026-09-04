@@ -1,6 +1,8 @@
-# Grafeno de Verdad · V5
+# Grafeno de Verdad · V6
 
-Sitio corporativo y catálogo técnico bilingüe de Grafeno de Verdad, S.A. de C.V. La V5 está construida con Next.js App Router y prioriza selección de materiales, co-desarrollo, evidencia técnica y conversión B2B.
+Sitio corporativo y catálogo técnico bilingüe de Grafeno de Verdad, S.A. de C.V. La V6 está construida con Next.js App Router y prioriza selección de materiales, co-desarrollo, evidencia técnica y conversión B2B.
+
+La V5 quedó congelada en el tag `v5.0.0` y en la rama `release/v5`. El registro de versiones y el procedimiento de retorno están documentados en [`RELEASES.md`](./RELEASES.md).
 
 ## Desarrollo local
 
