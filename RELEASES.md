@@ -19,6 +19,13 @@ Este punto contiene la V5 que estaba publicada antes de iniciar formalmente la V
 
 La frase **“¿Tiene un problema de materiales? Desarrollemos una solución.”** es texto editorial protegido de V6 y debe conservarse literalmente.
 
+### V6.1 · automoción y electromovilidad
+
+- Tarjeta sectorial destacada en Inicio y Soluciones.
+- Ficha bilingüe con TRL, alcance, evidencia externa, piloto, criterios de avance y límites de homologación.
+- Rutas contempladas: sensado impreso y 3D, gestión térmica, EMI/ESD y compuestos multifuncionales.
+- Imagen editorial clara y diferenciada; no representa un componente homologado ni desempeño propio de GdV.
+
 ## Retorno a V5
 
 1. En Vercel, hacer rollback al despliegue V5 registrado arriba.

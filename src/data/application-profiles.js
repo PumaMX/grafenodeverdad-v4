@@ -45,6 +45,92 @@ export const localEditorialImage = (fallbackPath, alt, caption, extra = {}) => (
 const commonStatus = short('Aplicación en desarrollo', 'Application in development')
 
 export const solutionApplicationProfiles = {
+  'automocion-electromovilidad': {
+    _type: 'solutionApplicationProfile',
+    publicStatus: commonStatus,
+    trl: 2,
+    technicalName: long(
+      'Plataforma de co-desarrollo de materiales grafénicos para sensado, gestión térmica, EMI/ESD y compuestos en automoción y electromovilidad.',
+      'Co-development platform for graphene materials in sensing, thermal management, EMI/ESD and composites for automotive and e-mobility applications.',
+    ),
+    industrialProblem: long(
+      'Un vehículo concentra sustratos, procesos y ambientes muy distintos. Un material útil en un sensor impreso puede no ser adecuado para una interfaz de batería, una carcasa electrónica o un compuesto estructural. La industria necesita reducir ese espacio de diseño sin confundir una posibilidad de laboratorio con un componente homologado.',
+      'A vehicle combines very different substrates, processes and environments. A material suitable for a printed sensor may be unsuitable for a battery interface, an electronic enclosure or a structural composite. Industry needs to narrow that design space without confusing a laboratory possibility with a qualified component.',
+    ),
+    grapheneSolution: long(
+      'Partir del componente y su modo de falla para seleccionar el tipo de grafeno, la formulación y el proceso. Las rutas iniciales incluyen sensores impresos de deformación, presión, temperatura o gases; interfaces y recubrimientos para distribuir calor; redes conductoras para disipación electrostática o apantallamiento; y compuestos ligeros con una función mecánica, térmica o de barrera prioritaria.',
+      'Start from the component and its failure mode to select the graphene type, formulation and process. Initial routes include printed strain, pressure, temperature or gas sensors; interfaces and coatings for heat spreading; conductive networks for electrostatic dissipation or shielding; and lightweight composites with a priority mechanical, thermal or barrier function.',
+    ),
+    expectedAdvantages: long(
+      'Una sola plataforma de materiales puede explorar varias funciones vehiculares, pero cada una requiere una formulación y un protocolo propios. El valor esperado es acelerar la selección material–proceso–componente y producir evidencia comparable para una decisión de ingeniería; no se afirma todavía desempeño vehicular, seguridad funcional ni cumplimiento OEM.',
+      'One materials platform can explore several vehicle functions, but each requires its own formulation and protocol. The expected value is faster material–process–component selection and comparable evidence for an engineering decision; vehicle performance, functional safety and OEM compliance are not yet claimed.',
+    ),
+    maturity: long(
+      'TRL 2: oportunidades y rutas experimentales definidas a partir de literatura y capacidades de formulación y caracterización. GdV todavía no cuenta con un componente automotriz propio validado ni homologado.',
+      'TRL 2: opportunities and experimental routes defined from literature and formulation and characterization capabilities. GdV does not yet have a validated or qualified automotive component of its own.',
+    ),
+    evidence: long(
+      'Interna: experiencia en grafeno CVD, GO, rGO, grafeno exfoliado, dispersiones, tintas, recubrimientos, compuestos y caracterización Raman, XPS, FTIR, UV–Vis y microscopía según el proyecto. Externa: existen demostraciones revisadas por pares de sensores grafénicos impresos para neumáticos y monitoreo de deformación en compuestos; sirven como precedentes, no como resultados de GdV.',
+      'Internal: experience with CVD graphene, GO, rGO, exfoliated graphene, dispersions, inks, coatings, composites and project-dependent Raman, XPS, FTIR, UV–Vis and microscopy. External: peer-reviewed demonstrations exist for printed graphene sensors in tires and strain monitoring in composites; they are precedents, not GdV results.',
+    ),
+    nextMilestone: long(
+      'Seleccionar con un socio un componente, un modo de falla y una métrica primaria; fabricar cupones con control sin grafeno y demostrar una ventaja reproducible antes de escalar a prototipo de componente.',
+      'Select one component, one failure mode and one primary metric with a partner; manufacture coupons with a graphene-free control and demonstrate a reproducible advantage before advancing to a component prototype.',
+    ),
+    targetFunctions: list(
+      ['Sensado impreso y estructuras 3D', 'Gestión térmica de baterías y electrónica', 'EMI/ESD y redes conductoras', 'Refuerzo, barrera y protección superficial'],
+      ['Printed sensing and 3D structures', 'Battery and electronics thermal management', 'EMI/ESD and conductive networks', 'Reinforcement, barrier and surface protection'],
+    ),
+    sectors: list(
+      ['OEM, Tier 1 y Tier 2', 'Baterías y propulsión eléctrica', 'Electrónica de potencia y arneses', 'Neumáticos, chasis y compuestos', 'Interiores, HMI y calidad del aire'],
+      ['OEMs, Tier 1 and Tier 2', 'Batteries and electric propulsion', 'Power electronics and harnesses', 'Tires, chassis and composites', 'Interiors, HMI and air quality'],
+    ),
+    modality: long(
+      'Proyecto B2B de I+D y co-desarrollo. El socio aporta componente, sustrato, proceso, especificación y condiciones de servicio; GdV aporta selección del material grafénico, formulación, controles, fabricación de cupones y caracterización. La validación de componente, subsistema y vehículo se realiza con el socio y laboratorios competentes.',
+      'B2B R&D and co-development project. The partner provides the component, substrate, process, specification and service conditions; GdV provides graphene selection, formulation, controls, coupon fabrication and characterization. Component, subsystem and vehicle validation is performed with the partner and qualified laboratories.',
+    ),
+    websiteCopy: list(
+      [
+        'En automoción, “usar grafeno” no es una especificación. Primero se define el componente, su modo de falla, el ambiente de montaje y la métrica que debe cambiar. Después se elige entre grafeno CVD, GO, rGO, grafeno exfoliado o un híbrido, y se diseña una formulación compatible con el proceso del socio.',
+        'La primera oportunidad prioritaria es el sensado impreso: pistas y arquitecturas 3D para medir deformación, presión, temperatura o exposición a gases. La misma disciplina de validación se aplica a interfaces térmicas de baterías y electrónica de potencia, redes EMI/ESD y compuestos multifuncionales. Cada ruta avanza por separado y contra un control.',
+      ],
+      [
+        'In automotive engineering, “using graphene” is not a specification. We first define the component, its failure mode, mounting environment and the metric that must change. We then choose among CVD graphene, GO, rGO, exfoliated graphene or a hybrid and design a formulation compatible with the partner’s process.',
+        'The first priority opportunity is printed sensing: tracks and 3D architectures for measuring strain, pressure, temperature or gas exposure. The same validation discipline applies to battery and power-electronics thermal interfaces, EMI/ESD networks and multifunctional composites. Each route advances separately and against a control.',
+      ],
+    ),
+    pilotScope: long(
+      'Elegir un componente y una función primaria. Para sensado, seleccionar sustrato, geometría, rango de deformación o analito y método de impresión; preparar un blanco de proceso, un control sin grafeno y una matriz reducida de dos o tres formulaciones.',
+      'Choose one component and one primary function. For sensing, select the substrate, geometry, strain range or analyte and printing method; prepare a process blank, a graphene-free control and a focused matrix of two or three formulations.',
+    ),
+    pilotValidation: long(
+      'Medir procesabilidad, adhesión y uniformidad; para sensores, sensibilidad o factor de galga, linealidad, histéresis, deriva, tiempo de respuesta, selectividad y ciclos; para rutas térmicas, resistencia térmica y mapa de temperatura; para EMI/ESD o compuestos, la propiedad funcional acordada. Aplicar temperatura, humedad, vibración, fluidos o niebla salina únicamente según la ubicación prevista.',
+      'Measure processability, adhesion and uniformity; for sensors, sensitivity or gauge factor, linearity, hysteresis, drift, response time, selectivity and cycling; for thermal routes, thermal resistance and temperature mapping; for EMI/ESD or composites, the agreed functional property. Apply temperature, humidity, vibration, fluids or salt spray only as relevant to the intended mounting location.',
+    ),
+    pilotGate: long(
+      'Avanzar si la formulación supera el control en la métrica primaria, conserva procesabilidad y mantiene la función después del envejecimiento acordado. No declarar aptitud automotriz hasta completar validación de componente o subsistema bajo la especificación del socio.',
+      'Advance if the formulation beats the control on the primary metric, preserves processability and retains function after the agreed aging sequence. Do not claim automotive fitness until component or subsystem validation is completed against the partner’s specification.',
+    ),
+    contactPrompt: long(
+      '¿Tienes un componente vehicular con un problema medible de sensado, calor, EMI/ESD, peso o degradación superficial? Comparte sustrato, proceso, ambiente y criterio de aceptación. Diseñemos el primer cupón comparativo.',
+      'Do you have a vehicle component with a measurable sensing, heat, EMI/ESD, weight or surface-degradation problem? Share the substrate, process, environment and acceptance criterion. Let us design the first comparative coupon.',
+    ),
+    scientificContext: long(
+      'Los whitepapers sectoriales se utilizaron para mapear oportunidades. Los artículos citados demuestran principios en sistemas externos y la norma ISO orienta la definición del ambiente de ensayo; ninguno acredita un producto automotriz de GdV.',
+      'Sector white papers were used to map opportunities. The cited papers demonstrate principles in external systems and the ISO standard guides definition of the test environment; none qualifies a GdV automotive product.',
+    ),
+    precedents: [
+      precedent('auto-maurya-2020', 'Maurya et al., 2020', ['Demostraron un sensor de deformación basado en GO/rGO, impreso directamente e integrado en un neumático con adquisición y transmisión inalámbrica.', 'Demonstrated a directly printed GO/rGO strain sensor integrated into a tire with data acquisition and wireless transmission.'], ['Sustenta explorar un piloto de sensor impreso alrededor de una geometría, un rango de carga y una ruta de integración definidos.', 'Supports exploring a printed-sensor pilot around a defined geometry, load range and integration route.'], ['Es un sistema académico externo; no demuestra reproducibilidad industrial, durabilidad vehicular ni desempeño de una formulación GdV.', 'It is an external academic system; it does not demonstrate industrial reproducibility, vehicle durability or performance of a GdV formulation.'], 'https://doi.org/10.1038/s41467-020-19088-y'),
+      precedent('auto-zitoun-2022', 'Zitoun et al., 2022', ['Evaluaron un sensor impreso con tinta comercial de grafeno para medir deformación en cupones compuestos bajo tensión, compresión y carga cíclica.', 'Evaluated a printed commercial-graphene-ink sensor for strain measurement in composite coupons under tension, compression and cyclic loading.'], ['Aporta una referencia para comparar la señal grafénica contra una galga convencional y cuantificar histéresis, no linealidad y repetibilidad.', 'Provides a reference for benchmarking a graphene signal against a conventional gauge and quantifying hysteresis, nonlinearity and repeatability.'], ['Los resultados pertenecen a esa tinta, geometría y laminado; no pueden trasladarse a otro componente sin validación.', 'The results belong to that ink, geometry and laminate; they cannot be transferred to another component without validation.'], 'https://doi.org/10.1007/s42452-022-04940-1'),
+    ],
+    references: [
+      reference('auto-maurya-ref', 'Maurya, D. et al. 3D printed graphene-based self-powered strain sensors for smart tires in autonomous vehicles. Nature Communications 11, 5392 (2020).', 'https://doi.org/10.1038/s41467-020-19088-y'),
+      reference('auto-zitoun-ref', 'Zitoun, A. et al. Graphene-based strain sensing in composites for structural and health monitoring applications. SN Applied Sciences 4, 58 (2022).', 'https://doi.org/10.1007/s42452-022-04940-1'),
+      reference('auto-iso-16750', 'ISO 16750-1:2023. Road vehicles — Environmental conditions and testing for electrical and electronic equipment — Part 1: General.', 'https://www.iso.org/standard/77578.html', ['Marco para definir esfuerzos ambientales según la ubicación de montaje; no cubre compatibilidad electromagnética.', 'Framework for defining environmental stresses by mounting location; electromagnetic compatibility is outside its scope.']),
+      reference('auto-graphene-council', 'The Graphene Council. Graphene in Automotive Applications and Graphene for Sensors. Sector white papers.', 'https://www.thegraphenecouncil.org', ['Fuentes de mapeo de oportunidad; no sustituyen una especificación OEM ni validación revisada por pares.', 'Opportunity-mapping sources; they do not replace an OEM specification or peer-reviewed validation.']),
+    ],
+  },
+
   'textiles-funcionales': {
     _type: 'solutionApplicationProfile',
     publicStatus: commonStatus,

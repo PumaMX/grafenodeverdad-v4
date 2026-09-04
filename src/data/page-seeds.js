@@ -398,7 +398,7 @@ export const pageSeeds = {
         _key: 'solutions', _type: 'catalogBlock', internalTitle: 'Aplicaciones y familias de solución', enabled: true, surface: 'paper', catalogType: 'solutions', display: 'cards',
         eyebrow: short('Ejemplos de aplicación', 'Application examples'),
         title: short('Proyectos que comienzan con una pregunta medible.', 'Projects that begin with a measurable question.'),
-        body: long('Las tres primeras fichas presentan líneas en desarrollo con alcance, evidencia y siguiente hito. El resto muestra otras familias que podemos explorar mediante co-desarrollo.', 'The first three profiles present development lines with scope, evidence and a next milestone. The remaining cards show other families we can explore through co-development.'),
+        body: long('Las fichas destacadas presentan líneas en desarrollo con alcance, evidencia y siguiente hito. El resto muestra otras familias que podemos explorar mediante co-desarrollo.', 'Featured profiles present development lines with scope, evidence and a next milestone. The remaining cards show other families we can explore through co-development.'),
         itemLabel: short('Explorar aplicación', 'Explore application'),
       },
       {

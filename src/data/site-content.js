@@ -93,6 +93,15 @@ export const materials = [
 
 export const solutions = [
   {
+    slug: 'automocion-electromovilidad',
+    code: 'SOL-MOB',
+    name: { es: 'Automoción y electromovilidad', en: 'Automotive and e-mobility' },
+    summary: { es: 'Co-desarrollo de sensado, gestión térmica, EMI/ESD y compuestos grafénicos alrededor de un componente y una métrica verificable.', en: 'Co-development of graphene sensing, thermal management, EMI/ESD and composites around one component and one verifiable metric.' },
+    outcomes: { es: ['Componente y modo de falla definidos', 'Cupón comparativo con control', 'Ruta de validación automotriz'], en: ['Defined component and failure mode', 'Comparative controlled coupon', 'Automotive validation path'] },
+    leadImage: localEditorialImage('/soluciones/automocion-electromovilidad-deeptech-v1.webp', ['Visualización DeepTech clara de un vehículo eléctrico con batería, sensores impresos, interfaz térmica y componentes multifuncionales.', 'Bright DeepTech visualization of an electric vehicle with a battery, printed sensors, thermal interface and multifunctional components.'], ['Visualización conceptual de oportunidades de co-desarrollo para automoción y electromovilidad; no representa un componente homologado ni resultados propios de GdV.', 'Conceptual visualization of automotive and e-mobility co-development opportunities; it does not represent a qualified component or GdV performance data.']),
+    applicationProfile: solutionApplicationProfiles['automocion-electromovilidad'],
+  },
+  {
     slug: 'tintas-conductoras',
     code: 'SOL-INK',
     name: { es: 'Tintas conductoras de grafeno', en: 'Graphene conductive inks' },
